@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <link rel="apple-touch-icon" href="fire_m.png">
+    <link rel="apple-touch-icon" href="Fire_m.HEIC">
     
     <title>MIKSMUSIK FIRE-M</title>
     <style>
@@ -15,14 +15,13 @@
             --card: rgba(25, 25, 25, 0.95);
             --text: #ffffff;
             --text-dim: #b3b3b3;
-            --header-height: 140px; /* Højde på bund-menuen */
+            --header-height: 140px; 
         }
 
         body { 
             font-family: -apple-system, system-ui, sans-serif; 
             background-color: var(--bg); 
-            /* Baggrunden har et mørkt filter over dit flammende M */
-            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('fire_m.png');
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('Fire_m.HEIC');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -33,7 +32,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* HEADER MED LOGO */
         .header {
             text-align: center;
             padding: 10px 0 30px 0;
@@ -53,12 +51,7 @@
         h2 { margin: 0; font-size: 24px; letter-spacing: 1px; text-transform: uppercase; }
         h2 span { color: var(--primary); text-shadow: 0 0 15px var(--accent); }
 
-        /* RESULTATER */
-        #results {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+        #results { display: flex; flex-direction: column; gap: 15px; }
 
         .song-item { 
             background: var(--card); padding: 20px; 
@@ -86,22 +79,11 @@
         }
         .btn:active { background: var(--accent); border-color: var(--primary); }
 
-        /* BUND-MENU (SØGNING) */
         .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: var(--header-height);
-            background: rgba(0, 0, 0, 0.96);
-            z-index: 100;
-            border-top: 2px solid var(--accent);
-            padding: 20px;
-            box-sizing: border-box;
-            backdrop-filter: blur(20px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: fixed; bottom: 0; left: 0; width: 100%; height: var(--header-height);
+            background: rgba(0, 0, 0, 0.96); z-index: 100; border-top: 2px solid var(--accent);
+            padding: 20px; box-sizing: border-box; backdrop-filter: blur(20px);
+            display: flex; flex-direction: column; align-items: center;
             box-shadow: 0 -15px 40px rgba(0,0,0,0.9);
         }
 
@@ -127,7 +109,7 @@
 <body>
 
     <div class="header">
-        <img src="fire_m.png" alt="Fire-M Logo" class="header-logo">
+        <img src="Fire_m.HEIC" alt="Fire-M Logo" class="header-logo">
         <h2>MIKS<span>MUSIK</span> FIRE-M</h2>
     </div>
 
@@ -204,7 +186,7 @@
 
         function copyText(text) {
             navigator.clipboard.writeText(text);
-            alert("Stien er kopieret til din iPhone!");
+            alert("Stien er kopieret!");
         }
     </script>
 </body>
