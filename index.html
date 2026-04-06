@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MiksMusik</title>
+    <title>MiksMusik PRO</title>
     <style>
         :root {
-            /* Den fede rød/neon farve fra dit logo */
             --primary: #FF1B51; 
             --bg: #000000;
-            --card: rgba(30, 30, 30, 0.9); /* Halv-gennemsigtig */
+            --card: rgba(30, 30, 30, 0.85);
             --text: #ffffff;
             --text-dim: #b3b3b3;
         }
@@ -17,13 +16,10 @@
         body { 
             font-family: -apple-system, system-ui, sans-serif; 
             background-color: var(--bg); 
-            
-            /* Læg logoet som en diskret mørk baggrund */
             background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('f_logo.png');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Billedet følger med, når du scroller */
-            
+            background-attachment: fixed;
             color: var(--text); 
             margin: 0; 
             padding: 20px;
@@ -37,127 +33,124 @@
             padding-bottom: 20px;
             z-index: 100;
             border-bottom: 2px solid var(--primary);
-            margin-bottom: 25px;
-            backdrop-filter: blur(5px); /* Gør baggrunden sløret under headeren */
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
         }
 
-        /* Det store logo øverst */
-        .header-logo {
-            width: 120px;
-            height: 120px;
-            display: block;
-            margin: 10px auto 15px auto;
-            object-fit: contain;
-        }
+        .header-logo { width: 80px; height: 80px; display: block; margin: 10px auto; object-fit: contain; }
+        h2 { text-align: center; margin: 0; font-size: 22px; text-shadow: 0 0 15px var(--primary); }
+        .count { text-align: center; font-size: 12px; color: var(--text-dim); margin: 5px 0 15px 0; }
 
-        h2 { text-align: center; margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -1px; text-shadow: 0 0 15px var(--primary); }
-
-        .count { text-align: center; font-size: 13px; color: var(--text-dim); margin: 5px 0 20px 0; }
-
+        .search-wrapper { position: relative; width: 100%; }
         #search { 
-            width: 100%; 
-            padding: 18px 25px; 
-            box-sizing: border-box;
-            border-radius: 50px; /* Rigtig runde hjørner */
-            border: 2px solid #333; 
-            font-size: 18px;
-            background: #1a1a1a; 
-            color: white;
-            outline: none;
-            transition: all 0.2s;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+            width: 100%; padding: 15px 45px 15px 20px; box-sizing: border-box;
+            border-radius: 50px; border: 2px solid #333; font-size: 17px;
+            background: #1a1a1a; color: white; outline: none;
+        }
+        #search:focus { border-color: var(--primary); box-shadow: 0 0 15px var(--primary); }
+        
+        .clear-btn {
+            position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+            background: #333; color: white; border: none; border-radius: 50%;
+            width: 25px; height: 25px; font-size: 14px; cursor: pointer; display: none;
         }
 
-        #search:focus { border-color: var(--primary); background: #222; box-shadow: 0 0 20px var(--primary); }
-
-        /* Sang-kortene */
         .song-item { 
-            background: var(--card); 
-            padding: 18px; 
-            margin-bottom: 15px; 
-            border-radius: 15px; 
-            border: 1px solid #333;
-            backdrop-filter: blur(5px);
-            transition: transform 0.1s;
+            background: var(--card); padding: 15px; margin-bottom: 12px; 
+            border-radius: 12px; border: 1px solid #333; backdrop-filter: blur(5px);
         }
 
-        .song-item:active { transform: scale(0.98); background: rgba(50, 50, 50, 0.9); }
+        .title { font-weight: 700; display: block; margin-bottom: 8px; font-size: 16px; color: var(--primary); }
+        .path { color: #ccc; font-size: 11px; word-break: break-all; background: rgba(0,0,0,0.4); padding: 8px; border-radius: 6px; display: block; }
 
-        .title { 
-            font-weight: 700; 
-            display: block; 
-            margin-bottom: 10px; 
-            font-size: 17px; 
-            color: var(--primary);
-            text-shadow: 0 0 10px var(--primary); /* Neon-effekt */
+        .controls { display: flex; gap: 10px; margin-top: 10px; }
+        .btn {
+            background: #444; color: white; border: none; padding: 10px 14px;
+            border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;
         }
+        .btn:active { background: var(--primary); }
 
-        .path { 
-            color: #ddd; 
-            font-size: 12px; 
-            word-break: break-all; 
-            font-family: 'SF Mono', Menlo, monospace;
-            line-height: 1.5;
-            background: rgba(0,0,0,0.5);
-            padding: 12px;
-            border-radius: 8px;
-            display: block;
-            border: 1px solid #222;
-        }
-
-        .no-results {
-            text-align: center;
-            color: var(--text-dim);
-            margin-top: 60px;
-            font-size: 15px;
-        }
+        .no-results { text-align: center; color: var(--text-dim); margin-top: 40px; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <img src="f_logo.png" alt="MiksMusik Logo" class="header-logo">
-        <h2>🔥 MIKS MUSIK ARKIV</h2>
-        <div id="stat" class="count">Indlæser database...</div>
-        <input type="text" id="search" placeholder="Hvad skal vi høre, Micki?..." onkeyup="search()">
+        <img src="f_logo.png" alt="Logo" class="header-logo">
+        <h2>MIKS MUSIK PRO</h2>
+        <div id="stat" class="count">Henter arkiv...</div>
+        <div class="search-wrapper">
+            <input type="text" id="search" placeholder="Find min musik" onkeyup="handleSearch()">
+            <button id="clearSearch" class="clear-btn" onclick="clearInput()">✕</button>
+        </div>
     </div>
 
     <div id="results"></div>
 
     <script src="musik_data.js"></script>
     <script>
-        const statEl = document.getElementById('stat');
         const resultsDiv = document.getElementById('results');
-        
+        const searchInput = document.getElementById('search');
+        const clearBtn = document.getElementById('clearSearch');
+
         if (typeof mineSange !== 'undefined') {
-            statEl.innerText = mineSange.length.toLocaleString() + " mp3-filer i din lomme";
-        } else {
-            statEl.innerText = "Fejl: Kunne ikke finde musik_data.js";
+            document.getElementById('stat').innerText = mineSange.length.toLocaleString() + " mp3-filer klar";
         }
 
-        function search() {
-            const query = document.getElementById('search').value.toLowerCase();
+        function clearInput() {
+            searchInput.value = '';
+            clearBtn.style.display = 'none';
             resultsDiv.innerHTML = '';
+            searchInput.focus();
+        }
 
-            if (query.length < 2) return;
-
-            const matches = mineSange.filter(s => s.navn.toLowerCase().includes(query));
-
-            if (matches.length === 0) {
-                resultsDiv.innerHTML = '<div class="no-results">Ingen sange fundet...</div>';
+        function handleSearch() {
+            const query = searchInput.value.toLowerCase();
+            clearBtn.style.display = query.length > 0 ? 'block' : 'none';
+            
+            if (query.length < 2) {
+                resultsDiv.innerHTML = '';
                 return;
             }
 
-            // Vis de første 100 resultater
-            matches.slice(0, 100).forEach(s => {
+            const queryWords = query.split(' ').filter(w => w.length > 0);
+            const matches = mineSange.filter(s => {
+                const navn = s.navn.toLowerCase();
+                return queryWords.every(word => navn.includes(word));
+            });
+
+            renderResults(matches.slice(0, 100));
+        }
+
+        function renderResults(songs) {
+            resultsDiv.innerHTML = songs.length === 0 ? '<div class="no-results">Intet fundet...</div>' : '';
+            songs.forEach(s => {
+                const folderPath = s.sti.substring(0, s.sti.lastIndexOf('/'));
                 const div = document.createElement('div');
                 div.className = 'song-item';
                 div.innerHTML = `
-                    <span class="title">${s.navn}</span>
+                    <span class="title" onclick="copyText('${s.sti.replace(/'/g, "\\'")}')">${s.navn}</span>
                     <span class="path">${s.sti}</span>
+                    <div class="controls">
+                        <button class="btn" onclick="copyText('${s.sti.replace(/'/g, "\\'")}')">📋 Kopiér Sti</button>
+                        <button class="btn" onclick="showFolder('${folderPath.replace(/'/g, "\\'")}')">📂 Vis Mappe</button>
+                    </div>
                 `;
                 resultsDiv.appendChild(div);
             });
+        }
+
+        function showFolder(path) {
+            const folderSongs = mineSange.filter(s => s.sti.startsWith(path));
+            searchInput.value = ""; 
+            clearBtn.style.display = 'none';
+            renderResults(folderSongs);
+            window.scrollTo(0,0);
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            alert("Stien er kopieret til din udklipsholder!");
         }
     </script>
 </body>
