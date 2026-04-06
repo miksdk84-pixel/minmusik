@@ -4,34 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <link rel="apple-touch-icon" href="app_icon.png">
+    <link rel="apple-touch-icon" href="fire_m.png">
     
-    <title>MiksMusik PRO</title>
+    <title>MIKSMUSIK FIRE-M</title>
     <style>
         :root {
-            --primary: #FF1B51; /* Neon Rød */
-            --bg: #000000;
-            --card: rgba(20, 20, 20, 0.9);
+            --primary: #FFD700;    /* Guld fra flammerne */
+            --accent: #FF4500;     /* Orange/Rød fra flammerne */
+            --bg: #000000;         
+            --card: rgba(25, 25, 25, 0.95);
             --text: #ffffff;
             --text-dim: #b3b3b3;
-            --header-height: 140px; /* Højde på bund-sektionen */
+            --header-height: 140px; /* Højde på bund-menuen */
         }
 
         body { 
             font-family: -apple-system, system-ui, sans-serif; 
             background-color: var(--bg); 
-            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('f_logo.png');
+            /* Baggrunden har et mørkt filter over dit flammende M */
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('fire_m.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: var(--text); 
             margin: 0; 
             padding: 20px;
-            padding-bottom: calc(var(--header-height) + 20px); /* Plads til bund-baren */
+            padding-bottom: calc(var(--header-height) + 20px);
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Resultat-området (nu i toppen) */
+        /* HEADER MED LOGO */
+        .header {
+            text-align: center;
+            padding: 10px 0 30px 0;
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .header-logo {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 69, 0, 0.5);
+            margin-bottom: 15px;
+        }
+
+        h2 { margin: 0; font-size: 24px; letter-spacing: 1px; text-transform: uppercase; }
+        h2 span { color: var(--primary); text-shadow: 0 0 15px var(--accent); }
+
+        /* RESULTATER */
         #results {
             display: flex;
             flex-direction: column;
@@ -40,79 +62,79 @@
 
         .song-item { 
             background: var(--card); padding: 20px; 
-            border-radius: 15px; border: 1px solid #333; backdrop-filter: blur(5px);
-            transition: all 0.1s;
+            border-radius: 18px; border: 1px solid #333; 
+            backdrop-filter: blur(10px);
         }
 
-        .title { font-weight: 700; display: block; margin-bottom: 10px; font-size: 18px; color: var(--primary); text-shadow: 0 0 10px var(--primary); }
-        .path { color: #ddd; font-size: 12px; word-break: break-all; background: rgba(0,0,0,0.5); padding: 12px; border-radius: 8px; display: block; font-family: 'SF Mono', monospace; }
+        .title { 
+            font-weight: 700; display: block; margin-bottom: 10px; font-size: 18px; 
+            color: var(--primary); 
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); 
+        }
+
+        .path { 
+            color: #ddd; font-size: 11px; word-break: break-all; 
+            background: rgba(0,0,0,0.6); padding: 12px; border-radius: 10px; 
+            display: block; font-family: 'SF Mono', monospace; border: 1px solid #222;
+        }
 
         .controls { display: flex; gap: 10px; margin-top: 15px; }
         .btn {
-            background: #444; color: white; border: none; padding: 12px 16px;
-            border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer;
+            background: #222; color: white; border: 1px solid #444; padding: 12px;
+            border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer;
             flex: 1; text-align: center;
         }
-        .btn:active { background: var(--primary); }
+        .btn:active { background: var(--accent); border-color: var(--primary); }
 
-        /* NY BUND-SEKTION (Søgebar, Logo & Info) */
+        /* BUND-MENU (SØGNING) */
         .footer {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
             height: var(--header-height);
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.96);
             z-index: 100;
-            border-top: 2px solid var(--primary);
+            border-top: 2px solid var(--accent);
             padding: 20px;
             box-sizing: border-box;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
+            box-shadow: 0 -15px 40px rgba(0,0,0,0.9);
         }
 
-        .footer-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .footer-logo { width: 40px; height: 40px; object-fit: contain; }
-        .count { font-size: 12px; color: var(--text-dim); }
+        .stat-bar { font-size: 11px; color: var(--text-dim); margin-bottom: 15px; }
 
         .search-wrapper { position: relative; width: 100%; max-width: 500px; }
         #search { 
-            width: 100%; padding: 18px 50px 18px 25px; box-sizing: border-box;
-            border-radius: 50px; border: 2px solid #333; font-size: 18px;
-            background: #1a1a1a; color: white; outline: none;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+            width: 100%; padding: 16px 50px 16px 20px; box-sizing: border-box;
+            border-radius: 50px; border: 2px solid #444; font-size: 18px;
+            background: #111; color: white; outline: none;
         }
-        #search:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(255, 27, 81, 0.5); }
+        #search:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
         
         .clear-btn {
-            position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+            position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
             background: #333; color: white; border: none; border-radius: 50%;
-            width: 28px; height: 28px; font-size: 16px; cursor: pointer; display: none;
+            width: 26px; height: 26px; cursor: pointer; display: none;
         }
 
-        .no-results { text-align: center; color: var(--text-dim); margin-top: 60px; font-size: 16px; }
+        .no-results { text-align: center; color: var(--text-dim); margin-top: 50px; }
     </style>
 </head>
 <body>
 
+    <div class="header">
+        <img src="fire_m.png" alt="Fire-M Logo" class="header-logo">
+        <h2>MIKS<span>MUSIK</span> FIRE-M</h2>
+    </div>
+
     <div id="results"></div>
 
     <div class="footer">
-        <div class="footer-info">
-            <img src="f_logo.png" alt="Logo" class="footer-logo">
-            <div id="stat" class="count">Henter arkiv...</div>
-        </div>
+        <div class="stat-bar" id="stat">Henter arkiv...</div>
         <div class="search-wrapper">
             <input type="text" id="search" placeholder="Find min musik" onkeyup="handleSearch()">
             <button id="clearSearch" class="clear-btn" onclick="clearInput()">✕</button>
@@ -126,7 +148,7 @@
         const clearBtn = document.getElementById('clearSearch');
 
         if (typeof mineSange !== 'undefined') {
-            document.getElementById('stat').innerText = mineSange.length.toLocaleString() + " mp3-filer klar";
+            document.getElementById('stat').innerText = mineSange.length.toLocaleString() + " mp3-filer i din lomme";
         }
 
         function clearInput() {
@@ -155,7 +177,7 @@
         }
 
         function renderResults(songs) {
-            resultsDiv.innerHTML = songs.length === 0 ? '<div class="no-results">Intet fundet...</div>' : '';
+            resultsDiv.innerHTML = songs.length === 0 ? '<div class="no-results">Ingen flammer fundet...</div>' : '';
             songs.forEach(s => {
                 const folderPath = s.sti.substring(0, s.sti.lastIndexOf('/'));
                 const div = document.createElement('div');
@@ -177,12 +199,12 @@
             searchInput.value = ""; 
             clearBtn.style.display = 'none';
             renderResults(folderSongs);
-            window.scrollTo(0,0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function copyText(text) {
             navigator.clipboard.writeText(text);
-            alert("Stien er kopieret til din udklipsholder!");
+            alert("Stien er kopieret til din iPhone!");
         }
     </script>
 </body>
