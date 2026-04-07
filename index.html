@@ -6,22 +6,24 @@
     
     <link rel="apple-touch-icon" href="m_logo.PNG">
     
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;800&display=swap" rel="stylesheet">
+    
     <title>MiksMusik M-ELITE</title>
     <style>
         :root {
             /* Metalliske Liquid Glass farver */
-            --primary: #FFD700;    /* Metallisk Guld */
-            --accent: #E0E0E0;     /* Metallisk Sølv/Hvid */
+            --primary: #D4AF37;    /* Metallisk Guld */
+            --accent: #EAEAEA;     /* Metallisk Sølv/Hvid */
             --bg: #000000;         
-            --glass: rgba(255, 255, 255, 0.04); /* Ultra-tyndt glas */
-            --glass-border: rgba(255, 215, 0, 0.15); /* Guld-kant på glas */
+            --glass: rgba(255, 255, 255, 0.03); /* Ultra-tyndt glas */
+            --glass-border: rgba(255, 215, 0, 0.1); /* Guld-kant på glas */
             --text: #ffffff;
-            --text-dim: rgba(255, 255, 255, 0.6);
+            --text-dim: rgba(255, 255, 255, 0.5);
             --header-height: 140px; 
         }
 
         body { 
-            font-family: -apple-system, system-ui, sans-serif; 
+            font-family: 'Lexend', -apple-system, system-ui, sans-serif; 
             background-color: var(--bg); 
             /* Baggrund: Dit M-logo, stort og dæmpet bag glasset */
             background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('m_logo.PNG');
@@ -107,8 +109,8 @@
             filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
         }
 
-        h2 { margin: 0; font-size: 26px; font-weight: 900; letter-spacing: -1.5px; text-transform: uppercase; color: var(--text); }
-        h2 span { color: var(--primary); text-shadow: 0 0 15px rgba(255,215,0,0.5); }
+        h2 { margin: 0; font-size: 32px; font-weight: 300; letter-spacing: -2px; text-transform: uppercase; color: var(--accent); }
+        h2 span { font-weight: 800; color: var(--primary); text-shadow: 0 0 15px rgba(212,175,55,0.4); }
 
         /* BUND-SEKTIONEN (Svævende Søgefelt) */
         .footer {
@@ -146,9 +148,9 @@
             width: 100%; padding: 16px 25px; box-sizing: border-box;
             border-radius: 30px; border: none; font-size: 18px;
             background: rgba(255,255,255,0.06); color: white; outline: none;
-            text-align: center;
+            text-align: center; font-family: 'Lexend', sans-serif;
         }
-        #search:focus { background: rgba(255,255,255,0.12); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
+        #search:focus { background: rgba(255,255,255,0.12); box-shadow: 0 0 20px rgba(212, 175, 55, 0.15); }
         #search::placeholder { color: rgba(255,255,255,0.4); }
         
         .clear-btn {
@@ -171,10 +173,10 @@
 
     <div class="footer">
         <div class="stat-bar">
-            <div id="stat">Indlæser database...</div>
+            <div id="stat">SCANNER ELITE DATABASE...</div>
         </div>
         <div class="search-wrapper">
-            <input type="text" id="search" placeholder="Find min musik..." onkeyup="handleSearch()" spellcheck="false" autocomplete="off">
+            <input type="text" id="search" placeholder="FIND DIT TRACK..." onkeyup="handleSearch()" spellcheck="false" autocomplete="off">
             <button id="clearSearch" class="clear-btn" onclick="clearInput()">✕</button>
         </div>
     </div>
@@ -229,7 +231,7 @@
         }
 
         function renderResults(songs) {
-            resultsDiv.innerHTML = songs.length === 0 ? '<div class="no-results">SYSTEM FEJL: INGEN TRACKS FUNDET</div>' : '';
+            resultsDiv.innerHTML = songs.length === 0 ? '<div class="no-results">INTRET MATCH I DATABASE</div>' : '';
             songs.forEach(s => {
                 const div = document.createElement('div');
                 div.className = 'song-item';
