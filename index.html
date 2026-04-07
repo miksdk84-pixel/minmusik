@@ -6,22 +6,22 @@
     
     <link rel="apple-touch-icon" href="Fire_m.HEIC">
     
-    <title>MIKSMUSIK FIRE-M</title>
+    <title>ListeAPPEN</title>
     <style>
         :root {
-            --primary: #FFD700;    /* Guld fra flammerne */
-            --accent: #FF4500;     /* Orange/Rød fra flammerne */
+            --primary: #FFD700;    /* Guld */
+            --accent: #FF4500;     /* Flamme-orange */
             --bg: #000000;         
-            --card: rgba(25, 25, 25, 0.95);
+            --card: rgba(20, 20, 20, 0.9); /* Gennemsigtige kort så man ser flammerne bagved */
             --text: #ffffff;
-            --text-dim: #b3b3b3;
             --header-height: 140px; 
         }
 
         body { 
             font-family: -apple-system, system-ui, sans-serif; 
             background-color: var(--bg); 
-            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('Fire_m.HEIC');
+            /* Her lægger vi Fire-M som den store baggrund */
+            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('Fire_m.HEIC');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -34,159 +34,145 @@
 
         .header {
             text-align: center;
-            padding: 10px 0 30px 0;
+            padding: 20px 0;
             border-bottom: 2px solid var(--accent);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 0 0 20px 20px;
         }
 
         .header-logo {
-            width: 100%;
-            max-width: 280px;
+            width: 140px;
             height: auto;
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(255, 69, 0, 0.5);
+            border-radius: 20px;
+            box-shadow: 0 0 25px var(--accent);
             margin-bottom: 15px;
         }
 
-        h2 { margin: 0; font-size: 24px; letter-spacing: 1px; text-transform: uppercase; }
-        h2 span { color: var(--primary); text-shadow: 0 0 15px var(--accent); }
+        h1 { 
+            margin: 0; 
+            font-size: 28px; 
+            letter-spacing: 2px; 
+            text-transform: uppercase;
+            color: var(--text);
+        }
+        h1 span { color: var(--primary); text-shadow: 0 0 15px var(--accent); }
 
         #results { display: flex; flex-direction: column; gap: 15px; }
 
         .song-item { 
-            background: var(--card); padding: 20px; 
-            border-radius: 18px; border: 1px solid #333; 
-            backdrop-filter: blur(10px);
+            background: var(--card); 
+            padding: 20px; 
+            border-radius: 18px; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            backdrop-filter: blur(15px);
         }
 
         .title { 
-            font-weight: 700; display: block; margin-bottom: 10px; font-size: 18px; 
+            font-weight: 700; 
+            display: block; 
+            margin-bottom: 10px; 
+            font-size: 18px; 
             color: var(--primary); 
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); 
         }
 
         .path { 
-            color: #ddd; font-size: 11px; word-break: break-all; 
-            background: rgba(0,0,0,0.6); padding: 12px; border-radius: 10px; 
-            display: block; font-family: 'SF Mono', monospace; border: 1px solid #222;
+            color: #ddd; 
+            font-size: 11px; 
+            word-break: break-all; 
+            background: rgba(0,0,0,0.6); 
+            padding: 12px; 
+            border-radius: 10px; 
+            display: block;
+            border: 1px solid #333;
         }
-
-        .controls { display: flex; gap: 10px; margin-top: 15px; }
-        .btn {
-            background: #222; color: white; border: 1px solid #444; padding: 12px;
-            border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer;
-            flex: 1; text-align: center;
-        }
-        .btn:active { background: var(--accent); border-color: var(--primary); }
 
         .footer {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: var(--header-height);
-            background: rgba(0, 0, 0, 0.96); z-index: 100; border-top: 2px solid var(--accent);
-            padding: 20px; box-sizing: border-box; backdrop-filter: blur(20px);
-            display: flex; flex-direction: column; align-items: center;
-            box-shadow: 0 -15px 40px rgba(0,0,0,0.9);
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            height: var(--header-height);
+            background: rgba(0, 0, 0, 0.95); 
+            z-index: 100; 
+            border-top: 2px solid var(--accent);
+            padding: 20px; 
+            box-sizing: border-box; 
+            backdrop-filter: blur(25px);
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
         }
 
-        .stat-bar { font-size: 11px; color: var(--text-dim); margin-bottom: 15px; }
-
-        .search-wrapper { position: relative; width: 100%; max-width: 500px; }
         #search { 
-            width: 100%; padding: 16px 50px 16px 20px; box-sizing: border-box;
-            border-radius: 50px; border: 2px solid #444; font-size: 18px;
-            background: #111; color: white; outline: none;
+            width: 100%; 
+            max-width: 500px;
+            padding: 16px 25px; 
+            border-radius: 50px; 
+            border: 2px solid #444; 
+            font-size: 18px;
+            background: #111; 
+            color: white; 
+            outline: none;
         }
-        #search:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
-        
-        .clear-btn {
-            position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
-            background: #333; color: white; border: none; border-radius: 50%;
-            width: 26px; height: 26px; cursor: pointer; display: none;
-        }
+        #search:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
 
-        .no-results { text-align: center; color: var(--text-dim); margin-top: 50px; }
+        .stat-text { font-size: 11px; color: #888; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <img src="Fire_m.HEIC" alt="Fire-M Logo" class="header-logo">
-        <h2>MIKS<span>MUSIK</span> FIRE-M</h2>
+        <img src="Fire_m.HEIC" alt="Logo" class="header-logo">
+        <h1>Liste<span>APPEN</span></h1>
     </div>
 
     <div id="results"></div>
 
     <div class="footer">
-        <div class="stat-bar" id="stat">Henter arkiv...</div>
-        <div class="search-wrapper">
-            <input type="text" id="search" placeholder="Find min musik" onkeyup="handleSearch()">
-            <button id="clearSearch" class="clear-btn" onclick="clearInput()">✕</button>
-        </div>
+        <div class="stat-text" id="stat">Henter arkiv...</div>
+        <input type="text" id="search" placeholder="Søg i din musik..." onkeyup="handleSearch()">
     </div>
 
     <script src="musik_data.js"></script>
     <script>
         const resultsDiv = document.getElementById('results');
         const searchInput = document.getElementById('search');
-        const clearBtn = document.getElementById('clearSearch');
 
         if (typeof mineSange !== 'undefined') {
-            document.getElementById('stat').innerText = mineSange.length.toLocaleString() + " mp3-filer i din lomme";
-        }
-
-        function clearInput() {
-            searchInput.value = '';
-            clearBtn.style.display = 'none';
-            resultsDiv.innerHTML = '';
-            searchInput.focus();
+            document.getElementById('stat').innerText = mineSange.length.toLocaleString() + " sange fundet";
         }
 
         function handleSearch() {
             const query = searchInput.value.toLowerCase();
-            clearBtn.style.display = query.length > 0 ? 'block' : 'none';
+            if (query.length < 2) { resultsDiv.innerHTML = ''; return; }
             
-            if (query.length < 2) {
-                resultsDiv.innerHTML = '';
-                return;
-            }
-
             const queryWords = query.split(' ').filter(w => w.length > 0);
             const matches = mineSange.filter(s => {
                 const navn = s.navn.toLowerCase();
                 return queryWords.every(word => navn.includes(word));
             });
 
-            renderResults(matches.slice(0, 100));
+            renderResults(matches.slice(0, 50));
         }
 
         function renderResults(songs) {
-            resultsDiv.innerHTML = songs.length === 0 ? '<div class="no-results">Ingen flammer fundet...</div>' : '';
+            resultsDiv.innerHTML = '';
             songs.forEach(s => {
-                const folderPath = s.sti.substring(0, s.sti.lastIndexOf('/'));
                 const div = document.createElement('div');
                 div.className = 'song-item';
                 div.innerHTML = `
                     <span class="title" onclick="copyText('${s.sti.replace(/'/g, "\\'")}')">${s.navn}</span>
                     <span class="path">${s.sti}</span>
-                    <div class="controls">
-                        <button class="btn" onclick="copyText('${s.sti.replace(/'/g, "\\'")}')">📋 Kopiér Sti</button>
-                        <button class="btn" onclick="showFolder('${folderPath.replace(/'/g, "\\'")}')">📂 Vis Mappe</button>
-                    </div>
                 `;
                 resultsDiv.appendChild(div);
             });
         }
 
-        function showFolder(path) {
-            const folderSongs = mineSange.filter(s => s.sti.startsWith(path));
-            searchInput.value = ""; 
-            clearBtn.style.display = 'none';
-            renderResults(folderSongs);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
         function copyText(text) {
             navigator.clipboard.writeText(text);
-            alert("Stien er kopieret!");
+            alert("Kopieret!");
         }
     </script>
 </body>
