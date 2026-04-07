@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <link rel="apple-touch-icon" href="m_logo.PNG">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <title>M-QUICK SANDBOX</title>
+    <title>M-SANDBOX DANISH BRIEF</title>
     <style>
         :root { 
             --amber: #ff9d00; 
@@ -14,170 +14,159 @@
             --red: #ff3b3b; 
             --green: #00ff88; 
             --gray: #222222;
+            --dk-red: #c60c30; /* Dannebrog Rød */
         }
 
         body { 
-            font-family: 'Inter', sans-serif; 
-            background: var(--bg); 
-            color: #fff; 
-            margin: 0; 
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; 
+            margin: 0; padding: 0; overflow-x: hidden;
         }
 
-        /* MINIMALISTISK LOGO */
+        /* THE DANISH BRIEF - TICKER */
+        .news-ticker {
+            background: #0a0a0a;
+            border-bottom: 1px solid #1a1a1a;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+        }
+
+        .ticker-label {
+            background: var(--dk-red);
+            color: white;
+            font-size: 8px;
+            font-weight: 900;
+            padding: 0 12px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 2001;
+            white-space: nowrap;
+        }
+
+        .ticker-content {
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: scroll-news 40s linear infinite;
+            font-size: 12px;
+            color: #eee;
+            font-weight: 500;
+        }
+
+        @keyframes scroll-news {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        .app-content { padding: 20px; display: flex; flex-direction: column; align-items: center; }
         .header { text-align: center; margin-bottom: 25px; margin-top: 10px; }
         .m-logo { width: 55px; filter: drop-shadow(0 0 10px var(--amber)); opacity: 0.8; }
 
-        /* SANDBOX PANEL */
+        /* SANDBOX */
         .sandbox-panel {
-            width: 100%;
-            max-width: 480px;
-            background: var(--card);
-            border-radius: 20px;
-            border: 1px solid var(--gray);
-            padding: 15px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+            width: 100%; max-width: 480px; background: var(--card);
+            border-radius: 20px; border: 1px solid var(--gray);
+            padding: 15px; box-shadow: 0 15px 50px rgba(0,0,0,0.7);
         }
 
         .panel-label {
-            font-size: 9px;
-            font-weight: 900;
-            color: var(--amber);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            text-align: center;
-            opacity: 0.6;
+            font-size: 9px; font-weight: 900; color: var(--amber); letter-spacing: 3px;
+            text-transform: uppercase; margin-bottom: 15px; text-align: center; opacity: 0.6;
         }
 
-        .input-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+        .input-row { display: flex; gap: 10px; margin-bottom: 20px; }
+        #reqInput { flex: 1; background: #000; border: 1px solid #333; border-radius: 12px; padding: 14px; color: #fff; font-size: 16px; outline: none; }
+        .add-btn { background: var(--amber); border: none; border-radius: 12px; padding: 0 18px; font-weight: 900; color: #000; }
 
-        #reqInput {
-            flex: 1;
-            background: #000;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 14px;
-            color: #fff;
-            font-size: 16px;
-            outline: none;
-            font-weight: 600;
-            transition: border-color 0.2s;
-        }
+        .list-container { display: flex; flex-direction: column; gap: 8px; }
+        .item { background: rgba(255,255,255,0.02); border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid transparent; }
+        .info { display: flex; align-items: center; gap: 12px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
 
-        #reqInput:focus { border-color: var(--amber); }
-
-        .add-btn {
-            background: var(--amber);
-            border: none;
-            border-radius: 12px;
-            padding: 0 18px;
-            font-weight: 900;
-            font-size: 18px;
-            color: #000;
-            cursor: pointer;
-        }
-
-        /* LISTE DESIGN */
-        .list-container {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .item {
-            background: rgba(255,255,255,0.02);
-            border-radius: 12px;
-            padding: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #1a1a1a;
-            animation: popIn 0.2s ease-out;
-        }
-
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .info { display: flex; align-items: center; gap: 12px; flex: 1; }
-        
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .name { font-weight: 700; font-size: 14px; color: #eee; }
-        
-        .delete { 
-            color: #444; 
-            font-size: 16px; 
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-
-        /* STATUS TEKST */
-        .status-msg {
-            margin-top: 15px;
+        /* DANISH BRIEF KNAP */
+        .dk-btn {
+            margin-top: 25px;
+            background: transparent;
+            border: 1px solid var(--dk-red);
+            color: var(--dk-red);
+            padding: 10px 22px;
+            border-radius: 30px;
             font-size: 10px;
-            color: #333;
-            text-align: center;
-            font-weight: 700;
+            font-weight: 900;
             text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: 0.2s;
         }
+        .dk-btn:active { background: var(--dk-red); color: #fff; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <img src="m_logo.PNG" class="m-logo">
+    <div class="news-ticker" id="newsBar">
+        <div class="ticker-label">Danish Brief 🇩🇰</div>
+        <div class="ticker-content" id="newsContent">
+            +++ INDLÆSER SENESTE NYHEDER FRA DANMARK... +++ TRAFIK: KØ PÅ E45 VED VEJLE... +++ VEJR: SKYET MED MULIGHED FOR LOKALE BYGER... +++ BREAKING: NYT FRA CHRISTIANSBORG...
+        </div>
     </div>
 
-    <div class="sandbox-panel">
-        <div class="panel-label">Quick Validator</div>
-        
-        <div class="input-row">
-            <input type="text" id="reqInput" placeholder="Ønske (f.eks. 'Avicii')" onkeypress="if(event.key==='Enter')addReq()">
-            <button class="add-btn" onclick="addReq()">+</button>
+    <div class="app-content">
+        <div class="header">
+            <img src="m_logo.PNG" class="m-logo">
         </div>
 
-        <div id="list" class="list-container"></div>
-        <div class="status-msg" id="statusMsg">Klar til ønsker</div>
+        <div class="sandbox-panel">
+            <div class="panel-label">Quick Validator</div>
+            
+            <div class="input-row">
+                <input type="text" id="reqInput" placeholder="Ønske..." onkeypress="if(event.key==='Enter')addReq()">
+                <button class="add-btn" onclick="addReq()">+</button>
+            </div>
+
+            <div id="list" class="list-container"></div>
+        </div>
+
+        <button class="dk-btn" onclick="updateDKBrief()">Opdatér Danish Brief</button>
     </div>
 
     <script src="musik_data.js"></script>
     <script>
         let list = [];
 
+        // Simulerede danske overskrifter (Kan senere kobles til en nyheds-API)
+        function updateDKBrief() {
+            const dkNews = [
+                "BREAKING: Nyt politisk flertal om grøn trepart +++ ",
+                "TRAFIK: Storebæltsbroen åben efter kortvarig afspærring +++ ",
+                "VEJR: DMI varsler kraftig blæst over Kattegat i nat +++ ",
+                "KØBENHAVN: Ny metro-linje åbner officielt på søndag +++ ",
+                "SPORT: Landstræneren udtager truppen til næste kamp +++ ",
+                "POLITI: Ekstra kontrol i nattelivet denne weekend +++ "
+            ];
+            
+            // Mix nyhederne tilfældigt
+            const brief = dkNews.sort(() => 0.5 - Math.random()).join('');
+            document.getElementById('newsContent').innerText = brief;
+            
+            // Visuel bekræftelse
+            document.getElementById('newsBar').style.borderBottom = "1px solid var(--dk-red)";
+            setTimeout(() => { document.getElementById('newsBar').style.borderBottom = "1px solid #1a1a1a"; }, 1500);
+        }
+
         function addReq() {
             const input = document.getElementById('reqInput');
             const val = input.value.trim();
             if (!val) return;
 
-            // Lyn-søgning i dit musik-bibliotek
-            const match = mineSange.some(s => 
-                s.navn.toLowerCase().includes(val.toLowerCase())
-            );
-
+            const match = mineSange.some(s => s.navn.toLowerCase().includes(val.toLowerCase()));
             list.unshift({ id: Date.now(), name: val, has: match });
             input.value = '';
             render();
-            
-            // Visuel bekræftelse i bunden
-            const msg = document.getElementById('statusMsg');
-            msg.innerText = match ? "MATCH FUNDET ✅" : "IKKE I BIBLIOTEK ❌";
-            msg.style.color = match ? "var(--green)" : "var(--red)";
-            setTimeout(() => { msg.innerText = "Klar til ønsker"; msg.style.color = "#333"; }, 2000);
         }
 
         function remove(id) {
@@ -188,15 +177,19 @@
         function render() {
             const container = document.getElementById('list');
             container.innerHTML = list.map(i => `
-                <div class="item" style="border-left: 3px solid ${i.has ? 'var(--green)' : 'var(--red)'}">
+                <div class="item" style="border-left-color: ${i.has ? 'var(--green)' : 'var(--red)'}">
                     <div class="info">
-                        <div class="dot" style="background: ${i.has ? 'var(--green)' : 'var(--red)'}; box-shadow: 0 0 8px ${i.has ? 'var(--green)' : 'var(--red)'}44"></div>
+                        <div class="dot" style="background: ${i.has ? 'var(--green)' : 'var(--red)'}"></div>
                         <div class="name">${i.name}</div>
                     </div>
-                    <div class="delete" onclick="remove(${i.id})">✕</div>
+                    <div onclick="remove(${i.id})" style="color:#333; padding: 5px;">✕</div>
                 </div>
             `).join('');
         }
+        
+        // Kør første gang
+        updateDKBrief();
+        setInterval(updateDKBrief, 300000); // Tjekker for "nyt" hver 5. minut
     </script>
 </body>
 </html>
