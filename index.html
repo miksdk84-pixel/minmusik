@@ -5,193 +5,197 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <link rel="apple-touch-icon" href="m_logo.PNG">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <title>M-ELITE COMMAND</title>
+    <title>M-QUICK SANDBOX</title>
     <style>
-        :root { --amber: #ff9d00; --bg: #000; --card: #111; --red: #ff3b3b; --green: #00ff88; --blue: #007aff; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 0; overflow: hidden; position: fixed; width: 100%; height: 100%; }
+        :root { 
+            --amber: #ff9d00; 
+            --bg: #000000; 
+            --card: #0c0c0c; 
+            --red: #ff3b3b; 
+            --green: #00ff88; 
+            --gray: #222222;
+        }
 
-        /* HEADER & GIG NOTES */
-        .header { text-align: center; padding: 30px 0 10px; background: var(--bg); z-index: 10; position: relative; }
-        .m-logo { width: 45px; filter: drop-shadow(0 0 15px var(--amber)); }
-        .gig-note { background: #1a1a00; border: 1px solid #333000; margin: 10px 20px; padding: 10px; border-radius: 10px; font-size: 11px; color: #ffffaa; text-align: center; font-style: italic; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            color: #fff; 
+            margin: 0; 
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
 
-        /* DUAL PAGE SETUP */
-        #mainWrapper { display: flex; width: 200vw; height: calc(100vh - 160px); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .page { width: 100vw; height: 100%; overflow-y: auto; padding: 0 15px 120px; box-sizing: border-box; -webkit-overflow-scrolling: touch; }
+        /* MINIMALISTISK LOGO */
+        .header { text-align: center; margin-bottom: 25px; margin-top: 10px; }
+        .m-logo { width: 55px; filter: drop-shadow(0 0 10px var(--amber)); opacity: 0.8; }
 
-        /* SEARCH SIDE UI */
-        .search-area { position: sticky; top: 0; background: var(--bg); padding-bottom: 10px; z-index: 5; }
-        .search-box { background: #1a1a1a; border-radius: 15px; border: 1px solid #333; padding: 12px; display: flex; align-items: center; }
-        #search { background: transparent; border: none; color: #fff; flex: 1; font-size: 16px; outline: none; font-weight: 700; text-align: center; }
+        /* SANDBOX PANEL */
+        .sandbox-panel {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card);
+            border-radius: 20px;
+            border: 1px solid var(--gray);
+            padding: 15px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+        }
+
+        .panel-label {
+            font-size: 9px;
+            font-weight: 900;
+            color: var(--amber);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            text-align: center;
+            opacity: 0.6;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #reqInput {
+            flex: 1;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 14px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            font-weight: 600;
+            transition: border-color 0.2s;
+        }
+
+        #reqInput:focus { border-color: var(--amber); }
+
+        .add-btn {
+            background: var(--amber);
+            border: none;
+            border-radius: 12px;
+            padding: 0 18px;
+            font-weight: 900;
+            font-size: 18px;
+            color: #000;
+            cursor: pointer;
+        }
+
+        /* LISTE DESIGN */
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .item {
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #1a1a1a;
+            animation: popIn 0.2s ease-out;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .info { display: flex; align-items: center; gap: 12px; flex: 1; }
         
-        .genre-tags { display: flex; gap: 8px; overflow-x: auto; padding: 10px 0; scrollbar-width: none; }
-        .genre-tags::-webkit-scrollbar { display: none; }
-        .tag { background: #222; padding: 6px 15px; border-radius: 20px; font-size: 10px; font-weight: 800; white-space: nowrap; border: 1px solid #333; }
-        .tag.active { background: var(--amber); color: #000; border-color: var(--amber); }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
 
-        .result-item { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 8px; border-left: 4px solid var(--amber); display: flex; justify-content: space-between; align-items: center; }
-        .res-info { flex: 1; overflow: hidden; }
-        .res-title { font-weight: 800; color: var(--amber); font-size: 14px; text-transform: uppercase; }
-        .res-path { font-size: 9px; opacity: 0.4; font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .name { font-weight: 700; font-size: 14px; color: #eee; }
+        
+        .delete { 
+            color: #444; 
+            font-size: 16px; 
+            padding: 5px 10px;
+            cursor: pointer;
+        }
 
-        /* HISTORY */
-        .history-section { margin-top: 30px; opacity: 0.6; }
-        .history-title { font-size: 9px; font-weight: 900; letter-spacing: 2px; margin-bottom: 10px; color: var(--blue); }
-
-        /* SANDBOX SIDE UI */
-        .sandbox-card { background: var(--card); border-radius: 20px; padding: 15px; border: 1px solid #222; }
-        .input-group { display: flex; gap: 8px; margin-bottom: 15px; }
-        #reqInput { flex: 1; background: #000; border: 1px solid #333; border-radius: 10px; padding: 12px; color: #fff; outline: none; }
-        .req-item { background: rgba(255,255,255,0.03); border-radius: 12px; padding: 12px; display: flex; justify-content: space-between; margin-bottom: 8px; align-items: center; }
-        .status-dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 10px; display: inline-block; }
-
-        /* NAV BAR */
-        .nav-bar { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(15,15,15,0.98); border-radius: 35px; border: 1px solid #333; padding: 5px; display: flex; gap: 5px; z-index: 999; width: 310px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
-        .nav-btn { flex: 1; border: none; background: transparent; color: #555; padding: 12px 0; border-radius: 30px; font-weight: 900; font-size: 11px; text-transform: uppercase; }
-        .nav-btn.active { background: var(--amber); color: #000; }
-        .btn-sos { background: var(--red) !important; color: #fff !important; }
+        /* STATUS TEKST */
+        .status-msg {
+            margin-top: 15px;
+            font-size: 10px;
+            color: #333;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
 
     <div class="header">
         <img src="m_logo.PNG" class="m-logo">
-        <div class="gig-note" id="gigNote" onclick="editNote()">Tryk for at skrive gig-noter (fødselsdage, tider osv.)</div>
     </div>
 
-    <div id="mainWrapper">
-        <div class="page" id="pageSearch">
-            <div class="search-area">
-                <div class="genre-tags">
-                    <div class="tag" onclick="filterGenre('Remix')">REMIX</div>
-                    <div class="tag" onclick="filterGenre('Club')">CLUB</div>
-                    <div class="tag" onclick="filterGenre('80s')">80'ER</div>
-                    <div class="tag" onclick="filterGenre('Dansk')">DANSK</div>
-                    <div class="tag" onclick="filterGenre('House')">HOUSE</div>
-                </div>
-                <div class="search-box">
-                    <input type="text" id="search" placeholder="SØG TRACK..." onkeyup="handleSearch()" autocomplete="off">
-                </div>
-            </div>
-            
-            <div id="searchResults"></div>
-
-            <div class="history-section" id="historySection" style="display:none;">
-                <div class="history-title">SET HISTORY (LIGE SPILLET)</div>
-                <div id="historyResults"></div>
-            </div>
+    <div class="sandbox-panel">
+        <div class="panel-label">Quick Validator</div>
+        
+        <div class="input-row">
+            <input type="text" id="reqInput" placeholder="Ønske (f.eks. 'Avicii')" onkeypress="if(event.key==='Enter')addReq()">
+            <button class="add-btn" onclick="addReq()">+</button>
         </div>
 
-        <div class="page" id="pageSandbox">
-            <div class="sandbox-card">
-                <div class="sandbox-title" style="font-size:9px; font-weight:900; color:var(--amber); margin-bottom:10px; text-align:center;">REQUEST ENGINE</div>
-                <div class="input-group">
-                    <input type="text" id="reqInput" placeholder="Skriv ønske..." onkeypress="if(event.key==='Enter')addRequest()">
-                    <button onclick="addRequest()" style="background:var(--amber); border:none; border-radius:10px; padding:0 15px; font-weight:900;">+</button>
-                </div>
-                <div id="reqList"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="nav-bar">
-        <button class="nav-btn active" id="btnSearch" onclick="showPage(0)">Search</button>
-        <button class="nav-btn" id="btnSandbox" onclick="showPage(1)">Sandbox</button>
-        <button class="nav-btn btn-sos" onclick="triggerSOS()">SOS</button>
+        <div id="list" class="list-container"></div>
+        <div class="status-msg" id="statusMsg">Klar til ønsker</div>
     </div>
 
     <script src="musik_data.js"></script>
     <script>
-        const wrapper = document.getElementById('mainWrapper');
-        let requests = [];
-        let history = [];
+        let list = [];
 
-        // SIDE NAVIGATION
-        function showPage(index) {
-            wrapper.style.transform = `translateX(-${index * 50}%)`;
-            document.getElementById('btnSearch').classList.toggle('active', index === 0);
-            document.getElementById('btnSandbox').classList.toggle('active', index === 1);
-        }
-
-        // GIG NOTES
-        function editNote() {
-            const n = prompt("Indtast gig-note:", document.getElementById('gigNote').innerText);
-            if(n) document.getElementById('gigNote').innerText = n;
-        }
-
-        // GENRE FILTER
-        function filterGenre(g) {
-            document.getElementById('search').value = g;
-            handleSearch();
-        }
-
-        // SØG OG KOPIER
-        function handleSearch() {
-            const q = document.getElementById('search').value.toLowerCase().trim();
-            const res = document.getElementById('searchResults');
-            if (q.length < 2) { res.innerHTML = ''; return; }
-            const matches = mineSange.filter(s => s.navn.toLowerCase().includes(q)).slice(0, 15);
-            res.innerHTML = matches.map(s => `
-                <div class="result-item" onclick="copyAndLog('${s.navn.replace(/'/g, "\\'")}', '${s.sti.replace(/'/g, "\\'")}')">
-                    <div class="res-info">
-                        <div class="res-title">${s.navn}</div>
-                        <div class="res-path">${s.sti}</div>
-                    </div>
-                    <div style="font-size:10px; color:var(--amber);">COPY</div>
-                </div>
-            `).join('');
-        }
-
-        function copyAndLog(name, path) {
-            navigator.clipboard.writeText(path);
-            if(!history.includes(name)) history.unshift(name);
-            renderHistory();
-            const btn = document.getElementById('btnSearch');
-            btn.innerText = "COPIED!";
-            setTimeout(() => btn.innerText = "SEARCH", 1000);
-        }
-
-        function renderHistory() {
-            const hSec = document.getElementById('historySection');
-            const hRes = document.getElementById('historyResults');
-            if(history.length > 0) {
-                hSec.style.display = 'block';
-                hRes.innerHTML = history.slice(0, 5).map(h => `<div style="font-size:11px; margin-bottom:5px; color:#666;">✓ ${h}</div>`).join('');
-            }
-        }
-
-        // SANDBOX -> SEARCH INTEGRATION
-        function addRequest() {
+        function addReq() {
             const input = document.getElementById('reqInput');
             const val = input.value.trim();
-            if(!val) return;
-            const hasIt = mineSange.some(s => s.navn.toLowerCase().includes(val.toLowerCase()));
-            requests.unshift({ name: val, owned: hasIt, id: Date.now() });
+            if (!val) return;
+
+            // Lyn-søgning i dit musik-bibliotek
+            const match = mineSange.some(s => 
+                s.navn.toLowerCase().includes(val.toLowerCase())
+            );
+
+            list.unshift({ id: Date.now(), name: val, has: match });
             input.value = '';
-            renderRequests();
+            render();
+            
+            // Visuel bekræftelse i bunden
+            const msg = document.getElementById('statusMsg');
+            msg.innerText = match ? "MATCH FUNDET ✅" : "IKKE I BIBLIOTEK ❌";
+            msg.style.color = match ? "var(--green)" : "var(--red)";
+            setTimeout(() => { msg.innerText = "Klar til ønsker"; msg.style.color = "#333"; }, 2000);
         }
 
-        function renderRequests() {
-            document.getElementById('reqList').innerHTML = requests.map(r => `
-                <div class="req-item" onclick="${r.owned ? `goToSearch('${r.name.replace(/'/g, "\\'")}')` : ''}">
-                    <span><span class="status-dot" style="background:${r.owned ? 'var(--green)' : 'var(--red)'}"></span>${r.name}</span>
-                    <span onclick="event.stopPropagation(); removeReq(${r.id})" style="color:#444;">✕</span>
+        function remove(id) {
+            list = list.filter(i => i.id !== id);
+            render();
+        }
+
+        function render() {
+            const container = document.getElementById('list');
+            container.innerHTML = list.map(i => `
+                <div class="item" style="border-left: 3px solid ${i.has ? 'var(--green)' : 'var(--red)'}">
+                    <div class="info">
+                        <div class="dot" style="background: ${i.has ? 'var(--green)' : 'var(--red)'}; box-shadow: 0 0 8px ${i.has ? 'var(--green)' : 'var(--red)'}44"></div>
+                        <div class="name">${i.name}</div>
+                    </div>
+                    <div class="delete" onclick="remove(${i.id})">✕</div>
                 </div>
             `).join('');
-        }
-
-        function goToSearch(name) {
-            showPage(0);
-            document.getElementById('search').value = name;
-            handleSearch();
-        }
-
-        function removeReq(id) { requests = requests.filter(r => r.id !== id); renderRequests(); }
-
-        function triggerSOS() {
-            showPage(0);
-            document.getElementById('search').value = "Remix";
-            handleSearch();
         }
     </script>
 </body>
