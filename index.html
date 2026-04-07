@@ -4,84 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <link rel="apple-touch-icon" href="m_logo.PNG">
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,900;1,400&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <title>M-ELITE PREDICTIVE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,900&family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
+    <title>M-ELITE INTERACTIVE</title>
     <style>
-        :root { --amber: #ff9d00; --plat: #ffffff; --bg: #000; --ai-blue: #00ffff; --sos-red: #ff3b3b; }
+        :root { 
+            --amber: #ff9d00; 
+            --plat: #ffffff; 
+            --bg: #050505; 
+            --ai-blue: #00f2ff; 
+            --sos-red: #ff3b3b;
+            --glass: rgba(18, 18, 18, 0.85);
+        }
         
         body { 
             font-family: 'Inter', sans-serif; background: var(--bg); 
-            background-image: radial-gradient(circle at 50% 0%, rgba(255, 157, 0, 0.1) 0%, transparent 60%), url('m_logo.PNG');
+            background-image: radial-gradient(circle at 50% 0%, rgba(255, 157, 0, 0.08) 0%, transparent 70%), url('m_logo.PNG');
             background-size: cover; background-position: center; background-attachment: fixed;
-            color: var(--plat); margin: 0; padding: 20px; padding-bottom: 120px;
+            color: var(--plat); margin: 0; padding: 20px; padding-bottom: 140px;
+            overflow-x: hidden; -webkit-tap-highlight-color: transparent;
         }
 
-        /* FLYDENDE SOS KNAP - PLACERET SIKKERT ØVERST TIL HØJRE */
+        /* 3D SOS KNAP */
         .sos-btn { 
-            position: fixed; 
-            top: 20px; 
-            right: 20px; 
-            width: 70px; 
-            height: 70px; 
-            background: var(--sos-red); 
-            border-radius: 50%; 
-            border: 4px solid #fff; 
-            color: white; 
-            font-weight: 900; 
-            font-size: 14px; 
-            z-index: 2000;
-            box-shadow: 0 0 30px rgba(255, 59, 59, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-transform: uppercase;
-            animation: pulse 2s infinite;
+            position: fixed; top: 25px; right: 20px; width: 65px; height: 65px; 
+            background: var(--sos-red); border-radius: 50%; border: 3px solid rgba(255,255,255,0.3); 
+            color: white; font-weight: 900; font-size: 13px; z-index: 2000;
+            box-shadow: 0 10px 25px rgba(255, 59, 59, 0.4), inset 0 -4px 8px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+        .sos-btn:active { transform: scale(0.85) translateY(5px); box-shadow: 0 2px 10px rgba(255, 59, 59, 0.6); }
 
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 59, 59, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 59, 59, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 59, 59, 0); }
-        }
-
-        .header { text-align: center; padding: 40px 0 20px; }
-        .mode-indicator { font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; margin-bottom: 10px; font-weight: 900; opacity: 0.8; }
-
-        /* PREDICTIVE AI PANEL */
+        /* NEURAL AI PANEL */
         #aiPanel { 
-            background: rgba(10, 10, 10, 0.95); 
-            border-left: 4px solid var(--ai-blue); border-radius: 15px; 
-            padding: 18px; margin-bottom: 20px; display: none;
-            backdrop-filter: blur(20px);
+            background: var(--glass); border: 1px solid rgba(0, 242, 255, 0.3); 
+            border-radius: 22px; padding: 20px; margin-bottom: 25px; display: none;
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            animation: slideIn 0.4s ease-out, aiPulse 4s infinite;
         }
-        .ai-status { font-size: 10px; color: var(--ai-blue); font-weight: 900; margin-bottom: 12px; }
-        .ai-chip { background: rgba(0, 255, 255, 0.05); padding: 12px; border-radius: 12px; font-size: 13px; border: 1px solid rgba(0,255,255,0.1); margin-bottom: 8px; }
+        @keyframes aiPulse { 0%, 100% { border-color: rgba(0, 242, 255, 0.2); } 50% { border-color: rgba(0, 242, 255, 0.6); box-shadow: 0 0 20px rgba(0, 242, 255, 0.1); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* LIST DESIGN */
-        #results { display: flex; flex-direction: column; gap: 12px; }
-        .song-item { background: rgba(25,25,25,0.95); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,157,0,0.15); }
-        .title { font-weight: 900; font-size: 16px; color: var(--amber); margin-bottom: 5px; text-transform: uppercase; }
-        .path { font-size: 10px; color: rgba(255,255,255,0.3); font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .btn { background: #fff; color: #000; border: none; padding: 14px; border-radius: 12px; font-size: 11px; font-weight: 900; width: 100%; margin-top: 10px; }
-
-        /* RENT SØGEFELT I BUNDEN */
-        .footer { position: fixed; bottom: 25px; left: 15px; right: 15px; z-index: 1000; }
-        .foot-wrap { background: rgba(15, 15, 15, 0.98); padding: 15px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(30px); }
-        #search { width: 100%; padding: 15px; border-radius: 20px; border: none; background: rgba(255,255,255,0.1); color: #fff; font-size: 18px; text-align: center; outline: none; font-weight: 700; box-sizing: border-box; }
+        /* SONG CARDS INTERACTIVE */
+        #results { display: flex; flex-direction: column; gap: 15px; }
+        .song-item { 
+            background: var(--glass); padding: 20px; border-radius: 24px; 
+            border: 1px solid rgba(255,255,255,0.05); position: relative;
+            transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        .song-item:active { transform: scale(0.97); background: rgba(255, 157, 0, 0.05); border-color: var(--amber); }
         
+        .title { font-weight: 900; font-size: 17px; color: var(--plat); margin-bottom: 6px; letter-spacing: -0.5px; }
+        .path { font-size: 10px; color: var(--amber); opacity: 0.6; font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        /* DYNAMISK FOOTER */
+        .footer { position: fixed; bottom: 0; left: 0; right: 0; padding: 25px 20px 40px; z-index: 1000; }
+        .footer::before { 
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 70%, transparent); pointer-events: none;
+        }
+        .foot-wrap { position: relative; background: rgba(25, 25, 25, 0.9); padding: 8px; border-radius: 32px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(20px); }
+        #search { 
+            width: 100%; padding: 18px; border-radius: 26px; border: none; 
+            background: transparent; color: #fff; font-size: 18px; text-align: center; 
+            outline: none; font-weight: 700; box-sizing: border-box; 
+        }
+
+        /* WAVEFORM DEKORATION */
+        .wave-box { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 3px; align-items: flex-end; height: 15px; opacity: 0.3; pointer-events: none; }
+        .wave-bar { width: 2px; background: var(--amber); border-radius: 2px; animation: wave 1s infinite alternate; }
+        @keyframes wave { from { height: 3px; } to { height: 12px; } }
     </style>
 </head>
 <body>
     
     <button class="sos-btn" onclick="triggerSOS()">SOS</button>
 
-    <div class="header">
-        <div id="timeMode" class="mode-indicator">SYSTEM READY</div>
-        <img src="m_logo.PNG" style="width: 75px; filter: drop-shadow(0 0 20px var(--amber));">
+    <div style="text-align:center; padding: 50px 0 30px;">
+        <div id="timeMode" style="font-size: 9px; color: var(--amber); letter-spacing: 4px; font-weight: 900; margin-bottom: 10px;">ELITE DJ INTERFACE</div>
+        <img src="m_logo.PNG" style="width: 80px; filter: drop-shadow(0 0 25px rgba(255,157,0,0.3));">
     </div>
 
     <div id="aiPanel">
-        <div class="ai-status">PREDICTIVE AI ADVISOR</div>
+        <div id="aiHeader" style="font-size: 10px; color: var(--ai-blue); font-weight: 900; margin-bottom: 15px; letter-spacing: 1px;">AI ADVISOR • ANALYZING SET VIBE</div>
         <div id="aiContent"></div>
     </div>
 
@@ -89,8 +94,8 @@
 
     <div class="footer">
         <div class="foot-wrap">
-            <input type="text" id="search" placeholder="SØG TRACK..." onkeyup="handleSearch()" autocomplete="off" spellcheck="false">
-            <div id="stat" style="text-align: center; font-size: 9px; color: var(--amber); margin-top: 10px; font-weight: 800;">M-ELITE AI ACTIVE</div>
+            <input type="text" id="search" placeholder="SEARCH TRACK..." onkeyup="handleSearch()" autocomplete="off" spellcheck="false">
+            <div class="wave-box" id="waves"></div>
         </div>
     </div>
 
@@ -101,14 +106,14 @@
         const aiPanel = document.getElementById('aiPanel');
         const aiContent = document.getElementById('aiContent');
 
-        function updateMode() {
-            const hour = new Date().getHours();
-            const modeText = document.getElementById('timeMode');
-            if(hour >= 22 || hour <= 4) modeText.innerText = "⚡ PEAK HOUR MODE";
-            else if(hour >= 18) modeText.innerText = "🍸 WARM-UP MODE";
-            else modeText.innerText = "☕ LIBRARY MODE";
+        // Lav interaktive wave-bars
+        const waves = document.getElementById('waves');
+        for(let i=0; i<15; i++) {
+            let bar = document.createElement('div');
+            bar.className = 'wave-bar';
+            bar.style.animationDelay = (i * 0.1) + 's';
+            waves.appendChild(bar);
         }
-        updateMode();
 
         function handleSearch() {
             const query = searchInput.value.toLowerCase().trim();
@@ -122,7 +127,8 @@
             songs.forEach(s => {
                 const div = document.createElement('div');
                 div.className = 'song-item';
-                div.innerHTML = `<div class="title">${s.navn}</div><div class="path">${s.sti}</div><button class="btn" onclick="copyAction('${s.sti.replace(/'/g, "\\'")}', '${s.navn.replace(/'/g, "\\'")}')">KOPIÉR STI</button>`;
+                div.innerHTML = `<div class="title">${s.navn}</div><div class="path">${s.sti}</div>`;
+                div.onclick = () => copyAction(s.sti, s.navn);
                 resultsDiv.appendChild(div);
             });
         }
@@ -130,24 +136,29 @@
         function copyAction(path, name) {
             navigator.clipboard.writeText(path);
             aiPanel.style.display = 'block';
+            
             const words = name.toLowerCase().split(' ').filter(w => w.length > 3);
             const recs = mineSange.filter(s => s.navn !== name && words.some(w => s.navn.toLowerCase().includes(w))).slice(0, 2);
-            let html = '<div style="font-size:11px; opacity:0.6; margin-bottom:8px;">SPIL DEREFTER:</div>';
-            recs.forEach(r => html += `<div class="ai-chip" onclick="quickS('${r.navn.replace(/'/g, "\\'")}')">🎯 ${r.navn}</div>`);
+            
+            let html = '<div style="font-size:11px; opacity:0.6; margin-bottom:12px;">AI PREDICTION • NEXT TRACK:</div>';
+            recs.forEach(r => {
+                html += `<div style="background:rgba(255,255,255,0.05); padding:12px; border-radius:15px; font-size:13px; border:1px solid rgba(0,242,255,0.1); margin-bottom:8px;" onclick="event.stopPropagation(); quickS('${r.navn.replace(/'/g, "\\'")}')">⚡ ${r.navn}</div>`;
+            });
+            
+            const energies = ["ENERGY: HIGH 🔥", "ENERGY: WARMUP 🍸", "VIBE: CLASSIC 💎"];
+            html += `<div style="font-size:10px; color:var(--ai-blue); font-weight:900; margin-top:10px; text-align:right;">${energies[Math.floor(Math.random()*energies.length)]}</div>`;
+            
             aiContent.innerHTML = html;
-            document.getElementById('stat').innerText = "COPIED!";
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         function quickS(n) { searchInput.value = n; handleSearch(); }
 
         function triggerSOS() { 
-            const hour = new Date().getHours();
-            let filter = (hour >= 22 || hour <= 4) ? /remix|club|hype|banger/ : /edit|club|clean/;
-            const sos = mineSange.filter(s => s.navn.toLowerCase().match(filter)).slice(0, 15);
+            const sos = mineSange.filter(s => s.navn.toLowerCase().match(/remix|club|banger|edit/)).sort(() => 0.5 - Math.random()).slice(0, 12);
             renderResults(sos);
-            document.getElementById('stat').innerText = "SOS LOADED!";
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            searchInput.value = "";
+            aiPanel.style.display = 'none';
         }
     </script>
 </body>
