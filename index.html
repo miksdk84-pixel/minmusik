@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>M-ELITE GRID AI</title>
+    <title>MiksMusik NEURAL AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="M_logo.png">
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
@@ -11,128 +11,114 @@
     <style>
         :root { 
             --gold: #ff9d00;
-            --deep: #350101;
-            --bg-overlay: rgba(5, 5, 5, 0.94);
-            --card: rgba(25, 25, 25, 0.65);
-            --border: rgba(255, 157, 0, 0.1);
+            --deep: #1a0a00;
+            --glass: rgba(15, 15, 15, 0.7);
+            --border: rgba(255, 157, 0, 0.2);
+            --neural-glow: rgba(255, 157, 0, 0.15);
         }
         
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            color: #fff; margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden;
-            background-image: url('M_logo.png'); background-size: cover; background-position: center; background-attachment: fixed;
+            background: #000; color: #fff; margin: 0; height: 100vh; overflow: hidden;
+            background-image: url('M_logo.png'); background-size: cover; background-position: center;
         }
 
         body::before {
             content: ""; position: fixed; inset: 0;
-            background: radial-gradient(circle at center, rgba(0,0,0,0.8) 0%, #000 100%);
+            background: radial-gradient(circle at center, rgba(0,0,0,0.85) 0%, #000 100%);
             z-index: -1;
         }
 
+        /* NEURAL HEADER */
         header { 
-            padding: 50px 20px 10px; border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 55px 25px 15px; display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid var(--border); backdrop-filter: blur(10px);
         }
-        .header-logo { width: 28px; height: 28px; object-fit: contain; filter: drop-shadow(0 0 5px var(--gold)); }
-        .app-title { font-weight: 800; font-size: 11px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; }
+        .header-logo { width: 32px; height: 32px; filter: drop-shadow(0 0 8px var(--gold)); }
+        .ai-status { font-size: 8px; font-weight: 900; color: var(--gold); letter-spacing: 2px; }
 
-        .controls { padding: 10px 20px 20px; flex-shrink: 0; }
-        .search-wrap { 
-            background: rgba(30, 30, 30, 0.8); border-radius: 16px; padding: 16px; 
-            display: flex; align-items: center; border: 1px solid var(--border); transition: 0.3s;
-            backdrop-filter: blur(10px);
+        .controls { padding: 20px; }
+        .search-container {
+            background: var(--glass); border: 1px solid var(--border); border-radius: 20px;
+            padding: 20px; backdrop-filter: blur(25px); position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
-        .search-wrap:focus-within { border-color: var(--gold); box-shadow: 0 0 20px rgba(255, 157, 0, 0.15); }
-        #search { background: transparent; border: none; color: #fff; width: 100%; font-size: 16px; font-weight: 600; outline: none; text-align: center; }
-        #search::placeholder { color: #666; font-style: italic; }
-
-        .tabs { display: flex; gap: 8px; overflow-x: auto; padding: 10px 20px; scrollbar-width: none; flex-shrink: 0; }
-        .tab { 
-            background: rgba(40, 40, 40, 0.8); color: #888; padding: 10px 18px; 
-            border-radius: 25px; font-size: 11px; font-weight: 800; white-space: nowrap; border: none; transition: 0.2s;
+        #search { 
+            background: transparent; border: none; color: #fff; width: 100%; 
+            font-size: 18px; font-weight: 600; outline: none; text-align: center;
         }
-        .tab.active { background: var(--gold); color: #000; }
+        #search::placeholder { color: #444; }
 
-        /* MODERNE GRID LAYOUT */
+        /* DYNAMISKE AI TABS */
+        .vibe-scroll { display: flex; gap: 12px; overflow-x: auto; padding: 10px 20px; scrollbar-width: none; }
+        .vibe-pill { 
+            background: rgba(255,255,255,0.03); color: #555; padding: 12px 22px; 
+            border-radius: 100px; font-size: 11px; font-weight: 800; border: 1px solid transparent; transition: 0.4s;
+        }
+        .vibe-pill.active { background: rgba(255,157,0,0.1); color: var(--gold); border-color: var(--gold); box-shadow: 0 0 15px var(--neural-glow); }
+
+        /* NEURAL GRID RESULTS */
         #results { 
-            flex-grow: 1; overflow-y: auto; padding: 10px 20px 140px; 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Autofylder kasser */
-            gap: 15px;
-            -webkit-overflow-scrolling: touch;
+            flex-grow: 1; overflow-y: auto; padding: 15px 20px 150px;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;
         }
 
-        .track-card { 
-            background: var(--card); border-radius: 16px; padding: 20px; 
-            border: 1px solid var(--border); display: flex; flex-direction: column; 
-            justify-content: flex-end; align-items: flex-start;
-            aspect-ratio: 1.1 / 1; /* Gør dem næsten kvadratiske */
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative; overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-            backdrop-filter: blur(5px);
+        .ai-card { 
+            background: var(--glass); border: 1px solid var(--border); border-radius: 20px;
+            padding: 20px; display: flex; flex-direction: column; justify-content: flex-end;
+            aspect-ratio: 1/1; position: relative; transition: 0.3s cubic-bezier(0.2, 1, 0.3, 1);
+            overflow: hidden; backdrop-filter: blur(10px);
         }
-
-        /* Gradient overlay for moderne dybde */
-        .track-card::after {
-            content: ""; position: absolute; inset: 0;
-            background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.8) 100%);
-            z-index: 1;
-        }
-
-        .track-card:active { transform: scale(0.96); background: var(--accent-deep); }
-        .track-card.copied { border-color: var(--gold); background: rgba(255, 157, 0, 0.1) !important; }
+        .ai-card:active { transform: scale(0.92); background: rgba(255,157,0,0.1); }
         
-        .t-info { z-index: 2; width: 100%; }
-        .t-name { font-weight: 700; font-size: 14px; color: #fff; margin-bottom: 5px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .t-path { font-size: 9px; color: #666; text-transform: uppercase; font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
-
-        /* Diskret kopi-ikon */
-        .copy-icon {
-            position: absolute; top: 15px; right: 15px; 
-            color: rgba(255,255,255,0.1); z-index: 2; transition: 0.2s;
+        .ai-card.top-match { border-color: var(--gold); box-shadow: 0 0 20px var(--neural-glow); }
+        .ai-card.top-match::after {
+            content: "AI MATCH"; position: absolute; top: 12px; right: 12px;
+            font-size: 7px; font-weight: 900; color: var(--gold);
         }
-        .track-card.copied .copy-icon { color: var(--gold); opacity: 1; }
 
+        .t-name { font-weight: 800; font-size: 13px; margin-bottom: 5px; line-height: 1.3; z-index: 2; }
+        .t-path { font-size: 8px; color: #444; text-transform: uppercase; letter-spacing: 1px; z-index: 2; }
+
+        /* FLOATING DOCK */
         .dock { 
             position: fixed; bottom: 0; left: 0; right: 0; 
-            background: linear-gradient(to top, rgba(0,0,0,1) 70%, transparent);
-            padding: 20px 20px 50px; display: flex; justify-content: center; 
+            background: linear-gradient(to top, #000 85%, transparent);
+            padding: 20px 25px 50px; display: flex; justify-content: center;
         }
         .panic-btn { 
-            background: var(--gold); color: #000; padding: 16px 40px; 
-            border-radius: 40px; font-weight: 800; font-size: 12px; letter-spacing: 2px;
-            box-shadow: 0 10px 30px rgba(255, 157, 0, 0.3);
+            background: var(--gold); color: #000; padding: 18px 50px; 
+            border-radius: 100px; font-weight: 900; font-size: 13px; letter-spacing: 3px;
+            box-shadow: 0 15px 40px rgba(255, 157, 0, 0.4); border: none;
         }
 
-        .status { text-align: center; color: #151515; grid-column: span 2; padding: 40px; font-size: 10px; font-weight: 900; letter-spacing: 4px; }
+        .status-info { text-align: center; color: #111; grid-column: span 2; padding: 50px; font-weight: 900; font-size: 10px; letter-spacing: 6px; }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="M_logo.png" alt="Logo" class="header-logo">
-    <div class="app-title">MiksMusik Control</div>
+    <img src="M_logo.png" class="header-logo">
+    <div class="ai-status" id="ai-brain">NEURAL ENGINE ACTIVE</div>
+    <div id="clock" style="font-size: 10px; font-weight: 800; opacity: 0.5;">00:00</div>
 </header>
 
 <div class="controls">
-    <div class="search-wrap">
-        <input type="text" id="search" placeholder="Næste sang er ....." onkeyup="smartFilter()" autocomplete="off">
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Næste sang er ....." onkeyup="neuralSearch()" autocomplete="off">
     </div>
 </div>
 
-<div class="tabs">
-    <div class="tab active" onclick="setVibe('', this)">Library</div>
-    <div class="tab" onclick="setVibe('dansk', this)">Dansk</div>
-    <div class="tab" onclick="setVibe('house', this)">House</div>
-    <div class="tab" onclick="setVibe('remix', this)">Remix</div>
+<div class="vibe-scroll" id="vibe-bar">
+    <div class="vibe-pill active" onclick="setVibe('', this)">ALL ASSETS</div>
+    <div class="vibe-pill" onclick="setVibe('dansk', this)">🇩🇰 DANISH</div>
+    <div class="vibe-pill" onclick="setVibe('house', this)">💃 HOUSE</div>
+    <div class="vibe-pill" onclick="setVibe('remix', this)">🔥 REMIXES</div>
 </div>
 
-<div id="results">
-    <div class="status" id="status">AI IS SCANNING 9000+ TRACKS...</div>
-</div>
+<div id="results"></div>
 
 <div class="dock">
     <button class="panic-btn" onclick="panic()">PANIC MODE</button>
@@ -141,88 +127,94 @@
 <script>
     let db = [];
     let vibe = '';
-    let fuse;
+    let engine;
+    let history = JSON.parse(localStorage.getItem('ai_rank') || '{}');
 
-    // Vi beholder din recovery-logik
+    // AI TIME CONTEXT
+    function updateContext() {
+        const hour = new Date().getHours();
+        const clock = document.getElementById('clock');
+        clock.innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        
+        // Foreslår vibe baseret på tid
+        if (hour >= 22 || hour <= 4) {
+            document.getElementById('ai-brain').innerText = "AI CONTEXT: PEAK NIGHT";
+        }
+    }
+
     async function init() {
         try {
             const response = await fetch('https://raw.githubusercontent.com/miksdk84-pixel/minmusik/4bf097e2ae15eb35c9b3c8ffa0b2c394bbe374b0/musik_data.js');
             let text = await response.text();
-            text = text.trim().replace(/const mineSange\s*=\s*/, '').replace(/;$/, '');
-            db = JSON.parse(text);
+            db = JSON.parse(text.trim().replace(/const mineSange\s*=\s*/, '').replace(/;$/, ''));
             
-            // Initialiser Fuzzy Search (AI-lite)
-            fuse = new Fuse(db, {
-                keys: ['navn', 'sti'],
-                threshold: 0.3, // Gør den "fuzzy"
-                distance: 100
+            engine = new Fuse(db, {
+                keys: [{name: 'navn', weight: 0.8}, {name: 'sti', weight: 0.2}],
+                threshold: 0.3,
+                includeScore: true
             });
 
-            document.getElementById('status').innerHTML = "SYSTEM READY // " + db.length + " TRACKS";
-            smartFilter();
-        } catch (e) {
-            document.getElementById('status').innerHTML = "SYSTEM ERROR";
-        }
+            neuralSearch();
+            setInterval(updateContext, 10000);
+            updateContext();
+        } catch (e) { console.error("Neural Error"); }
     }
 
     function setVibe(v, el) {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.vibe-pill').forEach(p => p.classList.remove('active'));
         el.classList.add('active');
         vibe = v;
-        smartFilter();
+        neuralSearch();
     }
 
-    function smartFilter() {
+    function neuralSearch() {
         const q = document.getElementById('search').value.toLowerCase();
         const res = document.getElementById('results');
         
         if (q.length < 2 && vibe === '') {
-            res.innerHTML = '<div class="status">AI IS READY FOR NEXT TRACK</div>';
+            res.innerHTML = '<div class="status-info">NEURAL ENGINE STANDBY</div>';
             return;
         }
 
-        let matches;
-        if (q.length >= 2) {
-            // BRUG FUZZY SEARCH
-            const aiResults = fuse.search(q);
-            matches = aiResults.map(r => r.item);
-        } else {
-            matches = db;
-        }
+        let matches = q.length >= 2 ? engine.search(q) : db.map(s => ({item: s, score: 1}));
 
-        // Filter på genre (vibe)
         if (vibe) {
-            matches = matches.filter(s => (s.navn + s.sti).toLowerCase().includes(vibe));
+            matches = matches.filter(m => (m.item.navn + m.item.sti).toLowerCase().includes(vibe));
         }
 
-        res.innerHTML = matches.slice(0, 30).map(s => `
-            <div class="track-card" onclick="copy(this, '${(s.sti || '').replace(/'/g, "\\'")}')">
-                <div class="copy-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                </div>
-                <div class="t-info">
-                    <span class="t-name">${s.navn || 'Unknown'}</span>
-                    <span class="t-path">${s.sti || ''}</span>
-                </div>
+        // NEURAL RANKING (History + Score)
+        matches.sort((a, b) => {
+            const rankA = (history[a.item.navn] || 0) * 0.5;
+            const rankB = (history[b.item.navn] || 0) * 0.5;
+            return (a.score - rankA) - (b.score - rankB);
+        });
+
+        res.innerHTML = matches.slice(0, 30).map((m, index) => `
+            <div class="ai-card ${index === 0 && q.length > 2 ? 'top-match' : ''}" 
+                 onclick="neuralCopy(this, '${m.item.navn}', '${(m.item.sti || '').replace(/'/g, "\\'")}')">
+                <span class="t-name">${m.item.navn}</span>
+                <span class="t-path">${m.item.sti.split('/').pop()}</span>
             </div>
         `).join('');
     }
 
-    function copy(el, p) {
-        navigator.clipboard.writeText(p);
-        el.classList.add('copied');
+    function neuralCopy(el, name, path) {
+        navigator.clipboard.writeText(path);
+        
+        history[name] = (history[name] || 0) + 1;
+        localStorage.setItem('ai_rank', JSON.stringify(history));
+
         const search = document.getElementById('search');
-        const original = search.placeholder;
-        search.placeholder = "AI COPIED TRACK!";
+        search.placeholder = "NEURAL: " + name + " COPIED";
+        
         setTimeout(() => { 
-            el.classList.remove('copied');
-            search.placeholder = old;
-        }, 1000);
+            search.placeholder = "Næste sang er .....";
+        }, 1500);
     }
 
     function panic() {
         document.getElementById('search').value = "";
-        setVibe('remix', document.querySelectorAll('.tab')[3]);
+        setVibe('remix', document.querySelectorAll('.vibe-pill')[3]);
     }
 
     init();
