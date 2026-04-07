@@ -6,28 +6,29 @@
     
     <link rel="apple-touch-icon" href="m_logo.PNG">
     
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,900;1,400&family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
     
-    <title>MiksMusik Brøndby Elite</title>
+    <title>MiksMusik Elite</title>
     <style>
         :root {
-            --bif-yellow: #FDE100; 
-            --bif-blue: #00529E;   
-            --bg: #000000;         
-            --glass: rgba(0, 25, 50, 0.95); /* Ultra mørkt glas for max læsbarhed */
+            --gold: #c5a059;       /* Champagne Guld */
+            --platinum: #e5e5e5;   /* Platin Hvid */
+            --bg: #050505;         /* Dyb Sort */
+            --glass: rgba(15, 15, 15, 0.9); /* Mørkt Liquid Glass */
             --header-height: 150px;
         }
 
         body { 
             font-family: 'Inter', sans-serif;
             background-color: var(--bg); 
-            background-image: radial-gradient(circle at 50% 0%, rgba(253, 225, 0, 0.1) 0%, transparent 60%), 
-                              linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.95)), 
+            /* Baggrund med dæmpet logo og platin-glød */
+            background-image: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 60%), 
+                              linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)), 
                               url('m_logo.PNG');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: #ffffff; 
+            color: var(--platinum); 
             margin: 0; 
             padding: 20px;
             padding-bottom: calc(var(--header-height) + 50px);
@@ -35,10 +36,11 @@
             overflow-x: hidden;
         }
 
+        /* TOP SPOTLIGHT */
         .spotlight {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 300px;
-            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            top: 0; left: 0; width: 100%; height: 350px;
+            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
             pointer-events: none;
             z-index: 10;
         }
@@ -53,13 +55,13 @@
         .header-logo {
             width: 80px;
             height: auto;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 20px var(--bif-blue));
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 20px rgba(197, 160, 89, 0.2));
         }
 
         .logo-text {
             font-family: 'Bodoni Moda', serif;
-            font-size: 36px;
+            font-size: 38px;
             font-weight: 900;
             text-transform: uppercase;
             display: flex;
@@ -68,63 +70,81 @@
             margin: 0;
         }
 
-        .logo-text .miks { color: #ffffff; font-style: italic; }
-        .logo-text .musik { color: var(--bif-yellow); text-shadow: 0 0 15px rgba(253, 225, 0, 0.4); }
+        .logo-text .miks {
+            color: var(--platinum);
+            font-style: italic;
+            font-weight: 400;
+        }
 
-        #results { display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 20; }
+        .logo-text .musik {
+            color: var(--gold);
+            background: linear-gradient(to bottom, #f1d39b, #96702d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.3));
+        }
+
+        /* RESULTATER */
+        #results { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            position: relative; 
+            z-index: 20; 
+        }
 
         .song-item { 
             background: var(--glass); 
             padding: 20px; 
             border-radius: 28px; 
-            border: 1px solid rgba(253, 225, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             display: flex; 
             align-items: center; 
             gap: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
         }
 
         .cover-art {
             width: 60px; height: 60px; border-radius: 12px;
             object-fit: cover; background: #000;
-            border: 1px solid var(--bif-blue);
+            border: 1px solid rgba(255,255,255,0.1);
             flex-shrink: 0;
         }
 
         .song-info { flex: 1; min-width: 0; }
         .title { 
-            font-weight: 800; font-size: 18px; color: var(--bif-yellow); 
+            font-weight: 800; font-size: 17px; color: var(--platinum); 
             margin-bottom: 5px; text-shadow: 0 1px 3px rgba(0,0,0,1); 
         }
         .path { 
-            font-size: 11px; color: rgba(255,255,255,0.4); 
+            font-size: 11px; color: rgba(255,255,255,0.3); 
             font-family: monospace; white-space: nowrap; 
             overflow: hidden; text-overflow: ellipsis; 
         }
 
         .btn-group { display: flex; gap: 10px; margin-top: 15px; }
         .btn {
-            background: var(--bif-blue); color: white; border: none;
+            background: rgba(255, 255, 255, 0.05); color: var(--gold); border: 1px solid rgba(197, 160, 89, 0.3);
             padding: 14px; border-radius: 14px; font-size: 11px; font-weight: 900; 
             flex: 1; text-transform: uppercase; letter-spacing: 1px;
         }
-        .btn:active { background: var(--bif-yellow); color: #000; }
-        .btn-folder { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); }
+        .btn:active { background: var(--gold); color: #000; }
 
+        /* FOOTER SØGEFELT */
         .footer {
             position: fixed; 
             bottom: 30px; 
             left: 20px; 
             right: 20px;
-            background: rgba(0, 82, 158, 0.98);
+            background: rgba(15, 15, 15, 0.95);
             padding: 20px; 
             border-radius: 40px;
             backdrop-filter: blur(50px);
-            border: 2px solid var(--bif-yellow);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 1000;
-            box-shadow: 0 -10px 50px rgba(0,0,0,0.8);
+            box-shadow: 0 -10px 50px rgba(0,0,0,0.9);
         }
 
         #search { 
@@ -132,18 +152,17 @@
             padding: 18px; 
             border-radius: 25px; 
             border: none;
-            background: #ffffff; 
-            color: #000; 
+            background: rgba(255, 255, 255, 0.05); 
+            color: #ffffff; 
             font-size: 18px;
             text-align: center; 
             outline: none;
-            font-weight: 800;
-            text-transform: uppercase;
+            font-weight: 600;
         }
 
         .stat-text { 
-            text-align: center; font-size: 10px; color: var(--bif-yellow); 
-            margin-bottom: 10px; font-weight: 900; letter-spacing: 2px; 
+            text-align: center; font-size: 10px; color: var(--gold); 
+            margin-bottom: 10px; font-weight: 800; letter-spacing: 2px; 
         }
     </style>
 </head>
@@ -161,8 +180,8 @@
     <div id="results"></div>
 
     <div class="footer">
-        <div class="stat-text" id="stat">VESTEGNEN SYSTEM ACTIVE</div>
-        <input type="text" id="search" placeholder="FIND DIN MUSIK..." onkeyup="handleSearch()" autocomplete="off" spellcheck="false">
+        <div class="stat-text" id="stat">ELITE SYSTEM READY</div>
+        <input type="text" id="search" placeholder="FIND DIT TRACK..." onkeyup="handleSearch()" autocomplete="off" spellcheck="false">
     </div>
 
     <script src="musik_data.js"></script>
@@ -206,7 +225,7 @@
                         <div class="path">${s.sti}</div>
                         <div class="btn-group">
                             <button class="btn" onclick="copyText('${s.sti.replace(/'/g, "\\'")}')">KOPIÉR STI</button>
-                            <button class="btn btn-folder" onclick="showFolder('${s.sti.substring(0, s.sti.lastIndexOf('/')).replace(/'/g, "\\'")}')">VIS MAPPE</button>
+                            <button class="btn" onclick="showFolder('${s.sti.substring(0, s.sti.lastIndexOf('/')).replace(/'/g, "\\'")}')">VIS MAPPE</button>
                         </div>
                     </div>
                 `;
@@ -223,9 +242,9 @@
 
         function copyText(text) {
             navigator.clipboard.writeText(text);
-            document.getElementById('stat').innerText = "KOPIERET!";
+            document.getElementById('stat').innerText = "TRACK KOPIERET!";
             setTimeout(() => {
-                document.getElementById('stat').innerText = "VESTEGNEN SYSTEM ACTIVE";
+                document.getElementById('stat').innerText = "ELITE SYSTEM READY";
             }, 2000);
         }
     </script>
