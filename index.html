@@ -4,164 +4,201 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <link rel="apple-touch-icon" href="m_logo.PNG">
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <title>M-ELITE NEURAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>M-SANDBOX</title>
     <style>
-        :root { --amber: #ff9d00; --plat: #ffffff; --bg: #000; --sos: #ff0044; --cyan: #00f2ff; }
-        
+        :root { 
+            --amber: #ff9d00; 
+            --bg: #000000; 
+            --card: #111111; 
+            --red: #ff3b3b; 
+            --green: #00ff88; 
+            --gray: #222222;
+        }
+
         body { 
-            font-family: 'Inter', sans-serif; background: var(--bg); 
-            color: var(--plat); margin: 0; padding: 20px; padding-bottom: 160px;
-            overflow-x: hidden; -webkit-user-select: none;
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            color: #fff; 
+            margin: 0; 
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* NEURAL BACKGROUND ANIMATION */
-        .neural-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 0%, rgba(255, 157, 0, 0.15) 0%, transparent 70%), url('m_logo.PNG');
-            background-size: cover; background-position: center; opacity: 0.6; z-index: -1;
-            filter: grayscale(0.5) contrast(1.2);
+        .header { text-align: center; margin-bottom: 30px; margin-top: 20px; }
+        .m-logo { width: 60px; filter: drop-shadow(0 0 15px var(--amber)); }
+
+        /* SANDBOX CORE */
+        .sandbox-container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card);
+            border-radius: 25px;
+            border: 1px solid var(--gray);
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
-        /* PULSERENDE SOS / PANIC KNAP */
-        .sos-btn { 
-            position: fixed; top: 30px; right: 20px; width: 60px; height: 60px; 
-            background: var(--sos); border-radius: 18px; border: 2px solid #fff; 
-            color: white; font-weight: 900; font-size: 11px; z-index: 2000;
-            box-shadow: 0 0 30px var(--sos); display: flex; align-items: center; justify-content: center;
-            transform: rotate(5deg); transition: 0.2s;
-        }
-        .sos-btn:active { transform: scale(0.8) rotate(0deg); filter: brightness(2); }
-
-        /* HISTORY DISKRET TOP BAR */
-        .history-scroll {
-            display: flex; gap: 10px; overflow-x: auto; padding: 10px 0;
-            margin-bottom: 20px; scrollbar-width: none;
-        }
-        .history-chip { 
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); 
-            padding: 6px 12px; border-radius: 10px; font-size: 10px; white-space: nowrap; color: #fff;
+        .sandbox-title {
+            font-size: 10px;
+            font-weight: 900;
+            color: var(--amber);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
-        /* AI COCKPIT PANEL */
-        #aiPanel { 
-            background: linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(0,0,0,1) 100%);
-            border-radius: 25px; padding: 20px; margin-bottom: 25px; display: none;
-            border: 1px solid var(--cyan); box-shadow: 0 0 40px rgba(0, 242, 255, 0.15);
-            animation: warpIn 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
         }
-        @keyframes warpIn { from { transform: scale(1.1) translateY(-20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
 
-        /* NEURAL CARDS */
-        .song-item { 
-            background: rgba(15, 15, 15, 0.8); padding: 22px; border-radius: 24px; 
-            border: 1px solid rgba(255,255,255,0.08); margin-bottom: 15px;
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            position: relative; transition: 0.2s;
+        #reqInput {
+            flex: 1;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 15px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            font-weight: 600;
         }
-        .song-item.heat { border-color: var(--amber); box-shadow: 0 0 20px rgba(255, 157, 0, 0.15); }
-        .song-item:active { background: var(--plat); color: #000; transform: translateX(10px); }
-        .song-item:active .title, .song-item:active .path { color: #000; }
 
-        .title { font-weight: 900; font-size: 18px; color: var(--amber); margin-bottom: 5px; letter-spacing: -0.5px; }
-        .path { font-size: 10px; color: rgba(255,255,255,0.4); font-family: monospace; }
+        #reqInput:focus { border-color: var(--amber); }
 
-        /* FOOTER COCKPIT */
-        .footer { position: fixed; bottom: 30px; left: 15px; right: 15px; z-index: 1000; }
-        .foot-wrap { 
-            background: rgba(10, 10, 10, 0.95); padding: 10px; border-radius: 40px; 
-            border: 1px solid var(--amber); box-shadow: 0 0 40px rgba(255, 157, 0, 0.2);
+        .add-btn {
+            background: var(--amber);
+            border: none;
+            border-radius: 15px;
+            padding: 0 20px;
+            font-weight: 900;
+            font-size: 20px;
+            cursor: pointer;
         }
-        #search { 
-            width: 100%; padding: 18px; border-radius: 32px; border: none; 
-            background: transparent; color: #fff; font-size: 20px; text-align: center; 
-            outline: none; font-weight: 800; text-transform: uppercase;
+
+        /* LISTE ITEMS */
+        .request-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .request-item {
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideIn 0.3s ease-out;
+            border: 1px solid transparent;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .request-info { display: flex; align-items: center; gap: 12px; }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .owned { border-color: rgba(0, 255, 136, 0.2); }
+        .missing { border-color: rgba(255, 59, 59, 0.2); }
+
+        .track-name { font-weight: 700; font-size: 14px; }
+        .remove-btn { color: #555; font-size: 18px; padding-left: 10px; cursor: pointer; }
+
+        .empty-msg {
+            text-align: center;
+            font-size: 12px;
+            color: #444;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    
-    <div class="neural-bg"></div>
-    <button class="sos-btn" onclick="triggerSOS()">PANIC</button>
 
-    <div style="text-align:center; padding: 40px 0 10px;">
-        <img src="m_logo.PNG" style="width: 80px; filter: drop-shadow(0 0 30px var(--amber));">
-        <div id="stat" style="font-size: 10px; color: var(--amber); font-weight: 900; margin-top: 10px; letter-spacing: 3px;">M-ELITE NEURAL ENGINE V3</div>
+    <div class="header">
+        <img src="m_logo.PNG" class="m-logo">
     </div>
 
-    <div class="history-scroll" id="historyBar"></div>
-
-    <div id="aiPanel">
-        <div id="aiContent"></div>
-    </div>
-
-    <div id="results"></div>
-
-    <div class="footer">
-        <div class="foot-wrap">
-            <input type="text" id="search" placeholder="NEURAL SEARCH..." onkeyup="handleSearch()" autocomplete="off">
+    <div class="sandbox-container">
+        <div class="sandbox-title">M-Elite Request Sandbox</div>
+        
+        <div class="input-group">
+            <input type="text" id="reqInput" placeholder="Skriv ønske her..." onkeypress="handleKey(event)">
+            <button class="add-btn" onclick="addRequest()">+</button>
         </div>
+
+        <div id="reqList" class="request-list"></div>
+        <div id="emptyMsg" class="empty-msg">Ingen ønsker i listen endnu</div>
     </div>
 
     <script src="musik_data.js"></script>
     <script>
-        const resultsDiv = document.getElementById('results');
-        const searchInput = document.getElementById('search');
-        const aiPanel = document.getElementById('aiPanel');
-        const historyBar = document.getElementById('historyBar');
-        let playHistory = [];
+        let requests = [];
 
-        function handleSearch() {
-            const query = searchInput.value.toLowerCase().trim();
-            if (query.length < 2) { resultsDiv.innerHTML = ''; aiPanel.style.display = 'none'; return; }
-            const matches = mineSange.filter(s => s.navn.toLowerCase().includes(query));
-            renderResults(matches.slice(0, 20));
+        function handleKey(e) {
+            if (e.key === 'Enter') addRequest();
         }
 
-        function renderResults(songs) {
-            resultsDiv.innerHTML = '';
-            songs.forEach(s => {
-                const isHeat = s.navn.toLowerCase().match(/remix|edit|2026/);
-                const div = document.createElement('div');
-                div.className = `song-item ${isHeat ? 'heat' : ''}`;
-                div.innerHTML = `<div class="title">${s.navn}</div><div class="path">${s.sti}</div>`;
-                div.onclick = () => copyAction(s.sti, s.navn);
-                resultsDiv.appendChild(div);
-            });
-        }
-
-        function copyAction(path, name) {
-            navigator.clipboard.writeText(path);
+        function addRequest() {
+            const input = document.getElementById('reqInput');
+            const val = input.value.trim();
             
-            // History
-            if (!playHistory.includes(name)) {
-                playHistory.unshift(name);
-                if (playHistory.length > 5) playHistory.pop();
-                historyBar.innerHTML = playHistory.map(h => `<div class="history-chip">🕒 ${h.substring(0,15)}</div>`).join('');
+            if (!val) return;
+
+            // Tjekker om sangen findes i din musik_data.js
+            const hasIt = mineSange.some(s => 
+                s.navn.toLowerCase().includes(val.toLowerCase())
+            );
+
+            requests.unshift({
+                id: Date.now(),
+                name: val,
+                owned: hasIt
+            });
+
+            input.value = '';
+            renderRequests();
+        }
+
+        function removeRequest(id) {
+            requests = requests.filter(r => r.id !== id);
+            renderRequests();
+        }
+
+        function renderRequests() {
+            const list = document.getElementById('reqList');
+            const emptyMsg = document.getElementById('emptyMsg');
+            
+            if (requests.length === 0) {
+                emptyMsg.style.display = 'block';
+                list.innerHTML = '';
+                return;
             }
 
-            // Neural AI Warp
-            aiPanel.style.display = 'block';
-            const words = name.toLowerCase().split(' ').filter(w => w.length > 4);
-            const recs = mineSange.filter(s => s.navn !== name && words.some(w => s.navn.toLowerCase().includes(w))).slice(0, 2);
-            
-            let html = '<div style="font-size:11px; color:var(--cyan); font-weight:900; margin-bottom:15px; letter-spacing:1px;">NEURAL PREDICTION:</div>';
-            recs.forEach(r => html += `<div style="background:rgba(0, 242, 255, 0.05); padding:15px; border-radius:18px; margin-bottom:10px; font-size:14px; border:1px solid rgba(0,242,255,0.2);" onclick="event.stopPropagation(); quickS('${r.navn.replace(/'/g, "\\'")}')">⚡ ${r.navn}</div>`);
-            
-            aiContent.innerHTML = html;
-            document.getElementById('stat').innerText = "BIOMETRIC COPIED";
-            setTimeout(() => { document.getElementById('stat').innerText = "M-ELITE NEURAL ENGINE V3"; }, 1500);
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-
-        function quickS(n) { searchInput.value = n; handleSearch(); }
-
-        function triggerSOS() { 
-            const sos = mineSange.filter(s => s.navn.toLowerCase().match(/remix|club|banger|drop/)).sort(() => 0.5 - Math.random()).slice(0, 15);
-            renderResults(sos);
-            searchInput.value = "";
-            document.getElementById('stat').innerText = "PANIC MODE ACTIVE";
-            aiPanel.style.display = 'none';
+            emptyMsg.style.display = 'none';
+            list.innerHTML = requests.map(r => `
+                <div class="request-item ${r.owned ? 'owned' : 'missing'}">
+                    <div class="request-info">
+                        <div class="status-dot" style="background: ${r.owned ? 'var(--green)' : 'var(--red)'}; box-shadow: 0 0 10px ${r.owned ? 'rgba(0,255,136,0.3)' : 'rgba(255,59,59,0.3)'}"></div>
+                        <div class="track-name">${r.name}</div>
+                    </div>
+                    <div class="remove-btn" onclick="removeRequest(${r.id})">✕</div>
+                </div>
+            `).join('');
         }
     </script>
 </body>
