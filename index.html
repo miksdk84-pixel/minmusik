@@ -3,96 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
     <link rel="apple-touch-icon" href="fire_m.png">
-    
-    <title>MiksMusik</title>
+    <title>MiksMusik PRO</title>
     <style>
         :root {
-            --primary: #FFD700;
-            --accent: #FF4500;
+            --primary: #FFD700;    /* Guld */
+            --accent: #FF4500;     /* Flamme-orange */
             --bg: #000000;         
-            --card: rgba(25, 25, 25, 0.9);
+            --card: rgba(28, 28, 30, 0.7); 
             --text: #ffffff;
-            --header-height: 140px; 
         }
 
         body { 
-            font-family: -apple-system, system-ui, sans-serif; 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
             background-color: var(--bg); 
-            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('fire_m.png');
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.95)), 
+                url('fire_m.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: var(--text); 
             margin: 0; 
             padding: 20px;
-            padding-bottom: calc(var(--header-height) + 20px);
+            padding-bottom: 180px; /* Ekstra plads til det svævende søgefelt */
             -webkit-font-smoothing: antialiased;
         }
 
+        /* BLÆRET HEADER */
         .header {
             text-align: center;
-            padding: 20px 0;
-            border-bottom: 2px solid var(--accent);
-            margin-bottom: 25px;
+            padding: 40px 0 20px 0;
+        }
+
+        @keyframes aura {
+            0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(255, 69, 0, 0.6); }
+            100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
         }
 
         .header-logo {
-            width: 100%;
-            max-width: 300px;
+            width: 120px;
             height: auto;
-            border-radius: 15px;
-            box-shadow: 0 0 25px rgba(255, 69, 0, 0.4);
-            margin-bottom: 10px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            animation: aura 4s infinite ease-in-out;
+            margin-bottom: 15px;
         }
 
         h1 { 
             margin: 0; 
-            font-size: 26px; 
-            letter-spacing: 1px; 
+            font-size: 34px; 
+            font-weight: 900;
+            letter-spacing: -1.5px;
             text-transform: uppercase;
+            background: linear-gradient(to bottom, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        h1 span { color: var(--primary); text-shadow: 0 0 15px var(--accent); }
 
-        #results { display: flex; flex-direction: column; gap: 15px; }
+        /* RESULTATER MED GLASS-EFFECT */
+        #results { display: flex; flex-direction: column; gap: 12px; }
 
         .song-item { 
-            background: var(--card); padding: 20px; 
-            border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); 
-            backdrop-filter: blur(15px);
+            background: var(--card); 
+            padding: 20px; 
+            border-radius: 24px; 
+            border: 1px solid rgba(255,255,255,0.08); 
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            transition: transform 0.2s, background 0.2s;
         }
 
-        .title { font-weight: 700; display: block; margin-bottom: 5px; font-size: 18px; color: var(--primary); }
-        .path { color: #ccc; font-size: 11px; word-break: break-all; }
+        .song-item:active {
+            transform: scale(0.96);
+            background: rgba(255, 69, 0, 0.3);
+        }
 
+        .title { 
+            font-weight: 800; 
+            display: block; 
+            margin-bottom: 6px; 
+            font-size: 19px; 
+            color: var(--primary);
+        }
+
+        .path { 
+            color: rgba(255,255,255,0.5); 
+            font-size: 11px; 
+            word-break: break-all; 
+            font-family: 'SF Mono', monospace;
+        }
+
+        /* SVÆVENDE SØGEFELT (MODERNE) */
         .footer {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: var(--header-height);
-            background: rgba(0, 0, 0, 0.96); z-index: 100; border-top: 2px solid var(--accent);
-            padding: 20px; box-sizing: border-box; backdrop-filter: blur(20px);
-            display: flex; flex-direction: column; align-items: center;
+            position: fixed; 
+            bottom: 30px; 
+            left: 20px;
+            right: 20px;
+            background: rgba(20, 20, 20, 0.8); 
+            z-index: 1000; 
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 12px; 
+            border-radius: 40px;
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         #search { 
-            width: 100%; max-width: 500px; padding: 16px 25px; border-radius: 50px; 
-            border: 2px solid #444; font-size: 18px; background: #111; color: white; outline: none;
+            width: 100%; 
+            padding: 16px 20px; 
+            border-radius: 30px; 
+            border: none;
+            font-size: 18px;
+            background: rgba(255,255,255,0.05); 
+            color: white; 
+            outline: none;
+            text-align: center;
+            box-sizing: border-box;
         }
-        #search:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
         
-        .stat-bar { font-size: 12px; color: #888; margin-bottom: 12px; }
+        #search::placeholder { color: rgba(255,255,255,0.4); }
+
+        .stat-text { 
+            text-align: center;
+            font-size: 10px; 
+            color: var(--primary); 
+            margin-bottom: 8px; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <img src="fire_m.png" alt="Logo" class="header-logo">
-        <h1>Miks<span>Musik</span></h1>
+        <img src="fire_m.png" alt="MiksMusik" class="header-logo">
+        <h1>MiksMusik</h1>
     </div>
 
     <div id="results"></div>
 
     <div class="footer">
-        <div class="stat-bar" id="stat">Henter arkiv...</div>
+        <div class="stat-text" id="stat">Indlæser database...</div>
         <input type="text" id="search" placeholder="Find min musik" onkeyup="handleSearch()">
     </div>
 
@@ -102,7 +157,7 @@
         const searchInput = document.getElementById('search');
 
         if (typeof mineSange !== 'undefined') {
-            document.getElementById('stat').innerText = mineSange.length.toLocaleString() + " mp3-filer i din lomme";
+            document.getElementById('stat').innerText = mineSange.length.toLocaleString() + " sange fundet";
         }
 
         function handleSearch() {
@@ -113,7 +168,7 @@
                 const navn = s.navn.toLowerCase();
                 return queryWords.every(word => navn.includes(word));
             });
-            renderResults(matches.slice(0, 50));
+            renderResults(matches.slice(0, 40));
         }
 
         function renderResults(songs) {
@@ -121,17 +176,18 @@
             songs.forEach(s => {
                 const div = document.createElement('div');
                 div.className = 'song-item';
+                div.onclick = function() {
+                    navigator.clipboard.writeText(s.sti);
+                    // Visuel bekræftelse
+                    div.style.background = "rgba(255, 215, 0, 0.4)";
+                    setTimeout(() => div.style.background = "", 200);
+                };
                 div.innerHTML = `
-                    <span class="title" onclick="copyText('${s.sti.replace(/'/g, "\\'")}')">${s.navn}</span>
+                    <span class="title">🎵 ${s.navn}</span>
                     <span class="path">${s.sti}</span>
                 `;
                 resultsDiv.appendChild(div);
             });
-        }
-
-        function copyText(text) {
-            navigator.clipboard.writeText(text);
-            alert("Kopieret!");
         }
     </script>
 </body>
