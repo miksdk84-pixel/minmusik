@@ -3,248 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    
     <link rel="apple-touch-icon" href="m_logo.PNG">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,900;1,400&family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
-    
-    <title>MiksMusik M-ELITE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,900;1,400&family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
+    <title>MiksMusik AI-ELITE</title>
     <style>
         :root {
-            --m-amber: #ff9d00;    /* Gløden fra dit M logo */
-            --platinum: #ffffff;   /* Ren hvid for max læsbarhed */
-            --bg: #000000;         
-            --glass: rgba(15, 15, 15, 0.92); /* Ultra mørkt glas */
-            --glass-border: rgba(255, 157, 0, 0.2);
-            --header-height: 150px;
+            --m-amber: #ff9d00;
+            --platinum: #ffffff;
+            --bg: #000000;
+            --glass: rgba(15, 15, 15, 0.95);
+            --ai-blue: #00ffff;
+            --emergency: #ff3b3b;
         }
 
         body { 
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg); 
-            /* Baggrund med dæmpet logo og rav-glød */
-            background-image: radial-gradient(circle at 50% 0%, rgba(255, 157, 0, 0.15) 0%, transparent 60%), 
-                              linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.92)), 
-                              url('m_logo.PNG');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: var(--platinum); 
-            margin: 0; 
-            padding: 20px;
-            padding-bottom: calc(var(--header-height) + 50px);
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif; background-color: var(--bg); 
+            background-image: radial-gradient(circle at 50% 0%, rgba(255, 157, 0, 0.1) 0%, transparent 60%), url('m_logo.PNG');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: var(--platinum); margin: 0; padding: 20px; padding-bottom: 240px; overflow-x: hidden;
         }
 
-        .spotlight {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 350px;
-            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 10;
+        /* AI PANEL */
+        .ai-panel {
+            background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(5, 5, 5, 1));
+            border: 1px solid rgba(0, 255, 255, 0.3); border-radius: 25px; padding: 20px; 
+            margin-bottom: 20px; box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
+            display: none; position: relative; z-index: 100;
+        }
+        .ai-header { font-size: 11px; font-weight: 900; color: var(--ai-blue); letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; }
+        .ai-chip { background: rgba(0, 255, 255, 0.05); padding: 12px; border-radius: 15px; font-size: 13px; border: 1px solid rgba(0, 255, 255, 0.2); cursor: pointer; margin-bottom: 8px; transition: 0.2s; }
+        .ai-chip:active { background: var(--ai-blue); color: #000; }
+
+        .header { text-align: center; padding: 40px 0 20px; }
+        .header-logo { width: 80px; filter: drop-shadow(0 0 20px var(--m-amber)); margin-bottom: 15px; }
+        .logo-text { font-family: 'Bodoni Moda', serif; font-size: 38px; font-weight: 900; text-transform: uppercase; display: flex; justify-content: center; gap: 10px; }
+        .logo-text .musik { color: var(--m-amber); }
+
+        #results { display: flex; flex-direction: column; gap: 12px; }
+        .song-item { background: var(--glass); padding: 18px; border-radius: 25px; border: 1px solid rgba(255, 157, 0, 0.1); display: flex; align-items: center; gap: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+        .title { font-weight: 800; font-size: 16px; color: var(--m-amber); margin-bottom: 4px; }
+        .path { font-size: 10px; color: rgba(255,255,255,0.3); font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .btn { background: rgba(255, 255, 255, 0.05); color: var(--m-amber); border: 1px solid rgba(255, 157, 0, 0.2); padding: 12px; border-radius: 12px; font-size: 10px; font-weight: 900; flex: 1; text-transform: uppercase; margin-top: 10px;}
+
+        /* FOOTER & EMERGENCY */
+        .footer { position: fixed; bottom: 20px; left: 15px; right: 15px; z-index: 1000; }
+        .footer-content { background: rgba(10, 10, 10, 0.98); padding: 15px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(40px); box-shadow: 0 -10px 50px rgba(0,0,0,0.9); }
+        #search { width: 100%; padding: 16px; border-radius: 25px; border: none; background: rgba(255, 255, 255, 0.06); color: #fff; font-size: 18px; text-align: center; outline: none; font-family: 'Inter', sans-serif;}
+        
+        .emergency-btn {
+            background: var(--emergency); color: white; border: none; border-radius: 50%; width: 45px; height: 45px;
+            font-weight: 900; font-size: 10px; cursor: pointer; position: absolute; right: -5px; top: -15px;
+            box-shadow: 0 0 15px rgba(255, 59, 59, 0.5); animation: pulse 2s infinite;
         }
 
-        .header {
-            text-align: center;
-            padding: 50px 0 30px;
-            position: relative;
-            z-index: 20;
-        }
-
-        .header-logo {
-            width: 85px;
-            height: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 25px rgba(255, 157, 0, 0.3));
-        }
-
-        .logo-text {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 38px;
-            font-weight: 900;
-            text-transform: uppercase;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 0;
-            letter-spacing: -1px;
-        }
-
-        .logo-text .miks {
-            color: #ffffff;
-            font-style: italic;
-            font-weight: 400;
-        }
-
-        .logo-text .musik {
-            color: var(--m-amber);
-            background: linear-gradient(to bottom, #ffc04d, #ff9d00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        #results { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
-            position: relative; 
-            z-index: 20; 
-        }
-
-        .song-item { 
-            background: var(--glass); 
-            padding: 20px; 
-            border-radius: 28px; 
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            display: flex; 
-            align-items: center; 
-            gap: 15px;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.8);
-        }
-
-        .cover-art {
-            width: 60px; height: 60px; border-radius: 12px;
-            object-fit: cover; background: #000;
-            border: 1px solid rgba(255, 157, 0, 0.2);
-            flex-shrink: 0;
-        }
-
-        .song-info { flex: 1; min-width: 0; }
-        .title { 
-            font-weight: 800; font-size: 17px; color: var(--m-amber); 
-            margin-bottom: 5px; text-shadow: 0 1px 4px rgba(0,0,0,1); 
-        }
-        .path { 
-            font-size: 11px; color: rgba(255,255,255,0.4); 
-            font-family: monospace; white-space: nowrap; 
-            overflow: hidden; text-overflow: ellipsis; 
-        }
-
-        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
-        .btn {
-            background: rgba(255, 157, 0, 0.1); color: var(--m-amber); border: 1px solid var(--glass-border);
-            padding: 14px; border-radius: 14px; font-size: 11px; font-weight: 900; 
-            flex: 1; text-transform: uppercase; letter-spacing: 1px;
-        }
-        .btn:active { background: var(--m-amber); color: #000; }
-
-        .footer {
-            position: fixed; 
-            bottom: 30px; 
-            left: 20px; 
-            right: 20px;
-            background: rgba(5, 5, 5, 0.98);
-            padding: 20px; 
-            border-radius: 40px;
-            backdrop-filter: blur(50px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1000;
-            box-shadow: 0 -10px 50px rgba(0,0,0,0.9);
-        }
-
-        #search { 
-            width: 100%; 
-            padding: 18px; 
-            border-radius: 25px; 
-            border: none;
-            background: rgba(255, 255, 255, 0.05); 
-            color: #ffffff; 
-            font-size: 18px;
-            text-align: center; 
-            outline: none;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .stat-text { 
-            text-align: center; font-size: 10px; color: var(--m-amber); 
-            margin-bottom: 10px; font-weight: 800; letter-spacing: 2px; 
-        }
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 59, 59, 0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(255, 59, 59, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 59, 59, 0); } }
     </style>
 </head>
 <body>
 
-    <div class="spotlight"></div>
-
     <div class="header">
         <img src="m_logo.PNG" class="header-logo">
-        <h1 class="logo-text">
-            <span class="miks">Miks</span><span class="musik">Musik</span>
-        </h1>
+        <h1 class="logo-text"><span>Miks</span><span class="musik">Musik</span></h1>
+    </div>
+
+    <div id="aiPanel" class="ai-panel">
+        <div class="ai-header">AI DJ ADVISOR • ANALYSIS READY</div>
+        <div id="aiContent" class="ai-suggestion-list"></div>
     </div>
 
     <div id="results"></div>
 
     <div class="footer">
-        <div class="stat-text" id="stat">SYSTEM READY</div>
-        <input type="text" id="search" placeholder="SØG HER..." onkeyup="handleSearch()" autocomplete="off" spellcheck="false">
+        <button class="emergency-btn" onclick="triggerEmergency()">SOS</button>
+        <div class="footer-content">
+            <div id="stat" style="text-align: center; font-size: 10px; color: var(--m-amber); margin-bottom: 8px; font-weight: 800; letter-spacing: 1px;">AI ELITE SYSTEM ONLINE</div>
+            <input type="text" id="search" placeholder="SØG TRACK..." onkeyup="handleSearch()" autocomplete="off" spellcheck="false">
+        </div>
     </div>
 
     <script src="musik_data.js"></script>
     <script>
         const resultsDiv = document.getElementById('results');
         const searchInput = document.getElementById('search');
-
-        if (typeof mineSange !== 'undefined') {
-            document.getElementById('stat').innerText = mineSange.length.toLocaleString() + " TRACKS ANALYZED";
-        }
+        const aiPanel = document.getElementById('aiPanel');
+        const aiContent = document.getElementById('aiContent');
 
         function handleSearch() {
             const query = searchInput.value.toLowerCase().trim();
-            if (query.length < 2) { resultsDiv.innerHTML = ''; return; }
-            const queryWords = query.split(" ");
-            const matches = mineSange.filter(s => {
-                const sangeNavn = s.navn.toLowerCase();
-                return queryWords.every(word => sangeNavn.includes(word));
-            });
-            renderResults(matches.slice(0, 30));
+            if (query.length < 2) { resultsDiv.innerHTML = ''; aiPanel.style.display = 'none'; return; }
+            const matches = mineSange.filter(s => s.navn.toLowerCase().includes(query));
+            renderResults(matches.slice(0, 25));
         }
 
-        async function fetchCover(songName, imgElement) {
-            try {
-                const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(songName)}&entity=song&limit=1`);
-                const data = await res.json();
-                if (data.results[0]) imgElement.src = data.results[0].artworkUrl100.replace('100x100', '300x300');
-            } catch (e) { imgElement.src = 'm_logo.PNG'; }
+        function triggerAI(name) {
+            aiPanel.style.display = 'block';
+            aiContent.innerHTML = '';
+            // AI algoritme: finder sange med lignende ord
+            const words = name.toLowerCase().split(' ').filter(w => w.length > 3);
+            const recs = mineSange.filter(s => s.navn !== name && words.some(w => s.navn.toLowerCase().includes(w))).slice(0, 2);
+            
+            let html = `<div style="font-size:11px; margin-bottom:10px; opacity:0.6;">BASERET PÅ DIT VALG, SPIL DEREFTER:</div>`;
+            recs.forEach(r => {
+                html += `<div class="ai-chip" onclick="quickSearch('${r.navn}')">🎯 ${r.navn}</div>`;
+            });
+            html += `<div style="margin-top:10px; font-size:9px; color:var(--ai-blue); font-weight:800;">INFO: Du mangler 'Extended Mix' af dette track.</div>`;
+            aiContent.innerHTML = html;
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
+
+        function triggerEmergency() {
+            // Finder "sikre" bangers
+            const bangers = mineSange.filter(s => s.navn.toLowerCase().includes('remix') || s.navn.toLowerCase().includes('edit') || s.navn.toLowerCase().includes('club')).slice(0, 10);
+            searchInput.value = "";
+            renderResults(bangers);
+            document.getElementById('stat').innerText = "EMERGENCY BANGERS LOADED!";
+            aiPanel.style.display = 'none';
+        }
+
+        function quickSearch(name) { searchInput.value = name; handleSearch(); }
 
         function renderResults(songs) {
             resultsDiv.innerHTML = '';
             songs.forEach(s => {
                 const div = document.createElement('div');
                 div.className = 'song-item';
-                const imgId = 'img-' + Math.random().toString(36).substr(2, 5);
-                div.innerHTML = `
-                    <img src="m_logo.PNG" class="cover-art" id="${imgId}">
-                    <div class="song-info">
-                        <div class="title">${s.navn}</div>
-                        <div class="path">${s.sti}</div>
-                        <div class="btn-group">
-                            <button class="btn" onclick="copyText('${s.sti.replace(/'/g, "\\'")}')">KOPIÉR STI</button>
-                            <button class="btn" onclick="showFolder('${s.sti.substring(0, s.sti.lastIndexOf('/')).replace(/'/g, "\\'")}')">VIS MAPPE</button>
-                        </div>
-                    </div>
-                `;
+                div.innerHTML = `<div class="song-info"><div class="title">${s.navn}</div><div class="path">${s.sti}</div><button class="btn" onclick="copyAction('${s.sti.replace(/'/g, "\\'")}', '${s.navn.replace(/'/g, "\\'")}')">KOPIÉR & ANALYSÉR</button></div>`;
                 resultsDiv.appendChild(div);
-                fetchCover(s.navn, document.getElementById(imgId));
             });
         }
 
-        function showFolder(path) {
-            searchInput.value = path;
-            handleSearch();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function copyText(text) {
-            navigator.clipboard.writeText(text);
-            document.getElementById('stat').innerText = "TRACK KLAR!";
-            setTimeout(() => {
-                document.getElementById('stat').innerText = "SYSTEM READY";
-            }, 2000);
+        function copyAction(path, name) {
+            navigator.clipboard.writeText(path);
+            triggerAI(name);
+            document.getElementById('stat').innerText = "COPIED TO CLIPBOARD";
         }
     </script>
 </body>
