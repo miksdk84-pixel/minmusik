@@ -3,48 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>M-ELITE PRO COMMAND</title>
+    <title>M-ELITE COMMAND PRO</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #ff9d00; --bg: #000; --card: #0a0a0a; --border: #1c1c1c; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; margin: 0; padding-bottom: 100px; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; margin: 0; padding-bottom: 100px; -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
         
         header { padding: 40px 20px 20px; text-align: center; }
-        .logo { font-weight: 800; font-size: 12px; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; }
+        .logo { font-weight: 800; font-size: 11px; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; text-shadow: 0 0 20px rgba(255, 157, 0, 0.4); }
 
-        .sticky-top { position: sticky; top: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); z-index: 1000; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .sticky-top { position: sticky; top: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 1000; border-bottom: 1px solid var(--border); }
         .search-wrapper { padding: 15px 20px; }
-        #search { background: #111; border: 1px solid var(--border); border-radius: 12px; padding: 15px; color: #fff; width: 100%; font-size: 16px; font-weight: 600; outline: none; text-align: center; box-sizing: border-box; }
+        #search { background: #111; border: 1px solid var(--border); border-radius: 14px; padding: 18px; color: #fff; width: 100%; font-size: 16px; font-weight: 600; outline: none; text-align: center; box-sizing: border-box; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); border-color: #333; }
+        #search:focus { border-color: var(--gold); }
 
-        .vibe-scroll { display: flex; gap: 10px; overflow-x: auto; padding: 0 20px; scrollbar-width: none; }
+        .vibe-scroll { display: flex; gap: 10px; overflow-x: auto; padding: 0 20px 15px; scrollbar-width: none; }
         .vibe-scroll::-webkit-scrollbar { display: none; }
-        .vibe-pill { background: #000; border: 1px solid var(--border); color: #444; padding: 8px 16px; border-radius: 100px; font-size: 10px; font-weight: 800; white-space: nowrap; text-transform: uppercase; }
-        .vibe-pill.active { background: var(--gold); color: #000; border-color: var(--gold); }
+        .vibe-pill { background: #000; border: 1px solid var(--border); color: #444; padding: 10px 20px; border-radius: 100px; font-size: 10px; font-weight: 800; white-space: nowrap; text-transform: uppercase; transition: 0.2s; border-color: #222; }
+        .vibe-pill.active { background: var(--gold); color: #000; border-color: var(--gold); box-shadow: 0 0 20px rgba(255, 157, 0, 0.3); }
 
-        #results { padding: 20px; }
-        .track { background: var(--card); border: 1px solid var(--border); padding: 16px; border-radius: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .track-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .track-meta { font-size: 9px; color: #444; text-transform: uppercase; }
+        #results { padding: 10px 20px; }
+        .track { background: var(--card); border: 1px solid var(--border); padding: 18px; border-radius: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; transition: 0.1s; }
+        .track:active { background: #151515; transform: scale(0.97); border-color: var(--gold); }
+        
+        .track-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; color: #fff; }
+        .track-meta { font-size: 9px; color: #333; text-transform: uppercase; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+        
+        .copy-icon { width: 32px; height: 32px; background: #000; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid #1a1a1a; }
+        
+        .status-msg { text-align: center; color: #1a1a1a; margin-top: 100px; font-weight: 800; font-size: 10px; letter-spacing: 3px; }
     </style>
 </head>
 <body>
 
-<header><div class="logo">M-Elite Command</div></header>
+<header><div class="logo">M-Elite Pro Command</div></header>
 
 <div class="sticky-top">
     <div class="search-wrapper">
-        <input type="text" id="search" placeholder="SØG I ARKIV..." onkeyup="filter()" autocomplete="off">
+        <input type="text" id="search" placeholder="SEARCH ARCHIVE..." onkeyup="filter()" autocomplete="off">
     </div>
     <div class="vibe-scroll">
-        <div class="vibe-pill active" onclick="setVibe('', this)">Alt</div>
+        <div class="vibe-pill active" onclick="setVibe('', this)">All</div>
         <div class="vibe-pill" onclick="setVibe('dansk', this)">🇩🇰 Dansk</div>
         <div class="vibe-pill" onclick="setVibe('house', this)">💃 House</div>
         <div class="vibe-pill" onclick="setVibe('remix', this)">🔥 Remix</div>
+        <div class="vibe-pill" onclick="setVibe('retro', this)">⏪ Retro</div>
     </div>
 </div>
 
 <div id="results">
-    <div style="text-align:center; color:#222; margin-top:50px; font-size:10px; letter-spacing:2px;">INDLÆSER ARKIV...</div>
+    <div class="status-msg" id="msg">INITIALIZING...</div>
 </div>
 
 <script src="musik_data.js"></script>
@@ -52,11 +60,13 @@
 <script>
     let currentVibe = '';
 
-    // TJEK DATA VED OPSTART
+    // Tjek om dataen er indlæst korrekt
     window.onload = function() {
         if (typeof mineSange === 'undefined') {
-            document.getElementById('results').innerHTML = '<div style="color:red; text-align:center; padding:20px;">FEJL: Kan ikke finde "mineSange" i musik_data.js</div>';
+            document.getElementById('msg').innerHTML = "ERROR: MINE SANGE NOT DEFINED";
+            document.getElementById('msg').style.color = "red";
         } else {
+            document.getElementById('msg').innerHTML = "READY TO MIX";
             filter();
         }
     };
@@ -71,23 +81,31 @@
     function filter() {
         const query = document.getElementById('search').value.toLowerCase();
         const res = document.getElementById('results');
+        const msg = document.getElementById('msg');
         
-        // Find de sange der matcher
+        if (query.length < 2 && currentVibe === '') {
+            res.innerHTML = '<div class="status-msg">READY TO MIX</div>';
+            return;
+        }
+
         const matches = mineSange.filter(s => {
             const txt = (s.navn + s.sti).toLowerCase();
             return txt.includes(query) && txt.includes(currentVibe);
         });
 
-        if (query.length < 2 && currentVibe === '') {
-            res.innerHTML = '<div style="text-align:center; color:#222; margin-top:50px; font-weight:800; font-size:10px;">READY TO MIX</div>';
+        if (matches.length === 0) {
+            res.innerHTML = '<div class="status-msg">NO MATCHES FOUND</div>';
             return;
         }
 
         res.innerHTML = matches.slice(0, 50).map(s => `
             <div class="track" onclick="copy('${s.sti.replace(/'/g, "\\'")}')">
-                <div style="flex:1; min-width:0;">
+                <div style="flex:1; min-width:0; padding-right:10px;">
                     <div class="track-name">${s.navn}</div>
                     <div class="track-meta">${s.sti}</div>
+                </div>
+                <div class="copy-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${currentVibe ? '#ff9d00' : '#222'}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 </div>
             </div>
         `).join('');
@@ -97,9 +115,9 @@
         navigator.clipboard.writeText(path);
         const s = document.getElementById('search');
         const old = s.placeholder;
-        s.placeholder = "KOPIERET!";
+        s.placeholder = "PATH COPIED!";
         s.value = "";
-        setTimeout(() => s.placeholder = old, 1000);
+        setTimeout(() => { s.placeholder = old; filter(); }, 800);
     }
 </script>
 
