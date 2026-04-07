@@ -4,170 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <link rel="apple-touch-icon" href="m_logo.PNG">
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,900;1,400&family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
-    <title>MiksMusik Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>MiksMusik BIF DONG</title>
     <style>
         :root {
-            --gold: #c5a059;       /* Champagne Guld */
-            --platinum: #e5e5e5;   /* Platin Hvid */
-            --bg: #000000;         /* Dyb Sort */
-            --glass: rgba(10, 10, 10, 0.9); /* Næsten sort glas */
-            --glass-border: rgba(197, 160, 89, 0.2);
-            --header-height: 140px;
+            --bif-yellow: #FDE100; 
+            --bif-blue: #00529E;   
+            --bg: #000000;
+            --glass: rgba(0, 40, 80, 0.9); 
         }
 
         body { 
             font-family: 'Inter', sans-serif;
             background-color: var(--bg); 
-            /* HER GØR VI BAGGRUNDEN MØRKERE: Vi øger sort-filteret fra 0.4 til 0.8 */
-            background-image: radial-gradient(circle at 50% -10%, rgba(197, 160, 89, 0.25) 0%, transparent 50%), 
-                              linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+            background-image: radial-gradient(circle at 50% -10%, rgba(253, 225, 0, 0.3) 0%, transparent 50%), 
+                              linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)), 
                               url('m_logo.PNG');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: var(--platinum); 
-            margin: 0; 
-            padding: 20px;
-            padding-bottom: calc(var(--header-height) + 60px);
+            color: #ffffff; 
+            margin: 0; padding: 20px;
+            padding-bottom: 220px;
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
         }
 
-        /* DÆMPET TOP SPOTLIGHT */
         .spotlight {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 350px;
-            background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 10;
+            position: fixed; top: 0; left: 0; width: 100%; height: 300px;
+            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none; z-index: 10;
         }
 
-        .header {
-            text-align: center;
-            padding: 40px 0 30px;
-            position: relative;
-            z-index: 20;
-        }
+        .header { text-align: center; padding: 50px 0 20px; position: relative; z-index: 20; }
+        .header-logo { width: 80px; filter: drop-shadow(0 0 20px var(--bif-blue)); margin-bottom: 10px; }
 
-        .header-logo {
-            width: 85px;
-            height: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 25px rgba(0,0,0,0.9));
-        }
-
-        /* ELEGANT LOGO TEKST */
         .logo-text {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 38px;
-            font-weight: 900;
-            letter-spacing: -1px;
-            text-transform: uppercase;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+            font-family: 'Bodoni Moda', serif; font-size: 36px; font-weight: 900;
+            text-transform: uppercase; display: flex; justify-content: center; gap: 10px;
         }
+        .logo-text .miks { color: var(--bif-yellow); font-style: italic; }
+        .logo-text .musik { color: var(--bif-blue); text-shadow: 0 0 10px rgba(0, 82, 158, 0.5); }
 
-        .logo-text .miks {
-            color: var(--platinum);
-            font-style: italic;
-            font-weight: 400;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
-        }
+        #results { display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 20; }
 
-        .logo-text .musik {
-            color: var(--gold);
-            background: linear-gradient(to bottom, #f1d39b, #96702d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.7));
-        }
-
-        /* DEEP GLASS SANG LISTE */
-        #results { display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 20; }
-
+        /* DONG KORT - EKSTRA TYDELIGE */
         .song-item { 
             background: var(--glass); 
-            padding: 16px; 
-            border-radius: 22px; 
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            padding: 20px; border-radius: 25px; 
+            border: 2px solid var(--bif-yellow);
+            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
             display: flex; align-items: center; gap: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
-            transition: transform 0.1s;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
-        
-        .song-item:active { transform: scale(0.98); background: rgba(197, 160, 89, 0.15); }
 
-        .cover-art {
-            width: 55px; height: 55px; border-radius: 12px;
-            object-fit: cover; background: #111;
-            border: 1px solid rgba(255,255,255,0.05); flex-shrink: 0;
-        }
+        .cover-art { width: 60px; height: 60px; border-radius: 15px; object-fit: cover; border: 1px solid var(--bif-yellow); }
 
         .song-info { flex: 1; min-width: 0; }
-        .title { font-weight: 800; font-size: 16px; color: var(--platinum); margin-bottom: 4px; text-shadow: 0 1px 3px rgba(0,0,0,1); }
-        .path { font-size: 10px; color: rgba(255,255,255,0.3); font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .title { font-weight: 900; font-size: 18px; color: var(--bif-yellow); margin-bottom: 4px; text-transform: uppercase; }
+        .path { font-size: 10px; color: rgba(255,255,255,0.5); font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .btn-group { display: flex; gap: 8px; margin-top: 10px; }
-        .btn {
-            background: rgba(197,160,89,0.1); color: var(--gold); border: 1px solid var(--glass-border);
-            padding: 10px; border-radius: 12px; font-size: 10px; font-weight: 800; flex: 1; text-transform: uppercase;
+        /* DONG KNAP - SKAL VÆRE STOR */
+        .copy-btn {
+            background: var(--bif-yellow); color: #000; border: none;
+            padding: 15px; border-radius: 15px; font-size: 14px; font-weight: 900; 
+            width: 100%; text-transform: uppercase; margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(253, 225, 0, 0.3);
         }
-        .btn:active { background: var(--gold); color: #000; }
+        .copy-btn:active { background: #fff; transform: scale(0.98); }
 
-        /* DEEP GLASS SEARCH BAR */
+        /* FOOTER */
         .footer {
-            position: fixed; 
-            bottom: 30px; 
-            left: 20px; 
-            right: 20px;
-            background: rgba(5, 5, 5, 0.95);
-            padding: 15px; 
-            border-radius: 35px;
-            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255,255,255,0.1); z-index: 1000;
-            box-shadow: 0 -10px 50px rgba(0,0,0,0.9);
+            position: fixed; bottom: 30px; left: 15px; right: 15px;
+            background: rgba(0, 82, 158, 0.98);
+            padding: 20px; border-radius: 40px;
+            border: 3px solid var(--bif-yellow); z-index: 1000;
         }
-
         #search { 
             width: 100%; padding: 18px; border-radius: 25px; border: none;
-            background: rgba(255,255,255,0.06); color: white; font-size: 18px;
-            text-align: center; outline: none; box-sizing: border-box; font-family: 'Inter', sans-serif;
+            background: #ffffff; color: #000; font-size: 20px; font-weight: 900;
+            text-align: center; outline: none; text-transform: uppercase;
         }
-        #search::placeholder { color: rgba(255,255,255,0.3); }
-
-        .stat-text { text-align: center; font-size: 10px; color: var(--gold); margin-bottom: 8px; font-weight: 800; letter-spacing: 2px; }
+        .stat-text { text-align: center; font-size: 11px; color: var(--bif-yellow); margin-bottom: 10px; font-weight: 900; letter-spacing: 2px; }
     </style>
 </head>
 <body>
-
     <div class="spotlight"></div>
-
     <div class="header">
         <img src="m_logo.PNG" class="header-logo">
         <h1 class="logo-text"><span class="miks">Miks</span><span class="musik">Musik</span></h1>
     </div>
-
     <div id="results"></div>
-
     <div class="footer">
-        <div class="stat-text" id="stat">ELITE SYSTEM READY</div>
-        <input type="text" id="search" placeholder="FIND DIT TRACK..." onkeyup="handleSearch()" autocomplete="off" spellcheck="false">
+        <div class="stat-text" id="stat">VESTEGNEN DONG-SYSTEM READY</div>
+        <input type="text" id="search" placeholder="FIND DONG SANG..." onkeyup="handleSearch()" autocomplete="off">
     </div>
 
     <script src="musik_data.js"></script>
     <script>
         const resultsDiv = document.getElementById('results');
         const searchInput = document.getElementById('search');
-        const statText = document.getElementById('stat');
-
-        if (typeof mineSange !== 'undefined') {
-            statText.innerText = mineSange.length.toLocaleString() + " TRACKS ANALYZED";
-        }
 
         function handleSearch() {
             const query = searchInput.value.toLowerCase().trim();
@@ -177,15 +112,7 @@
                 const sangeNavn = s.navn.toLowerCase();
                 return queryWords.every(word => sangeNavn.includes(word));
             });
-            renderResults(matches.slice(0, 30));
-        }
-
-        async function fetchCover(songName, imgElement) {
-            try {
-                const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(songName)}&entity=song&limit=1`);
-                const data = await res.json();
-                if (data.results[0]) imgElement.src = data.results[0].artworkUrl100.replace('100x100', '300x300');
-            } catch (e) { imgElement.src = 'm_logo.PNG'; }
+            renderResults(matches.slice(0, 20));
         }
 
         function renderResults(songs) {
@@ -193,14 +120,24 @@
             songs.forEach(s => {
                 const div = document.createElement('div');
                 div.className = 'song-item';
-                const imgId = 'img-' + Math.random().toString(36).substr(2, 5);
-                div.innerHTML = `<img src="m_logo.PNG" class="cover-art" id="${imgId}"><div class="song-info"><div class="title">${s.navn}</div><div class="path">${s.sti}</div><div class="btn-group"><button class="btn" onclick="copyText('${s.sti.replace(/'/g, "\\'")}')">KOPIÉR STI</button><button class="btn" onclick="showFolder('${s.sti.substring(0, s.sti.lastIndexOf('/')).replace(/'/g, "\\'")}')">VIS MAPPE</button></div></div>`;
+                div.innerHTML = `
+                    <img src="m_logo.PNG" class="cover-art">
+                    <div class="song-info">
+                        <div class="title">${s.navn}</div>
+                        <div class="path">${s.sti}</div>
+                        <button class="copy-btn" onclick="copyText('${s.sti.replace(/'/g, "\\'")}')">KLAR TIL DONG!</button>
+                    </div>
+                `;
                 resultsDiv.appendChild(div);
-                fetchCover(s.navn, document.getElementById(imgId));
             });
         }
-        function showFolder(path) { searchInput.value = path; handleSearch(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-        function copyText(text) { navigator.clipboard.writeText(text); alert("Klar til pulten!"); }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            // Ingen irriterende alert her, bare en hurtig farve-ændring for hastighed
+            document.getElementById('stat').innerText = "KOPIERET - FYR DEN AF!";
+            setTimeout(() => { document.getElementById('stat').innerText = "VESTEGNEN DONG-SYSTEM READY"; }, 2000);
+        }
     </script>
 </body>
 </html>
