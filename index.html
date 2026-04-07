@@ -4,81 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <link rel="apple-touch-icon" href="m_logo.PNG">
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,900;1,400&family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
-    <title>MiksMusik AI-ELITE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,900;1,400&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>M-ELITE PREDICTIVE</title>
     <style>
-        :root {
-            --m-amber: #ff9d00;
-            --platinum: #ffffff;
-            --bg: #000000;
-            --glass: rgba(15, 15, 15, 0.95);
-            --ai-blue: #00ffff;
-            --emergency: #ff3b3b;
-        }
-
+        :root { --amber: #ff9d00; --plat: #ffffff; --bg: #000; --ai-blue: #00ffff; }
         body { 
-            font-family: 'Inter', sans-serif; background-color: var(--bg); 
+            font-family: 'Inter', sans-serif; background: var(--bg); 
             background-image: radial-gradient(circle at 50% 0%, rgba(255, 157, 0, 0.1) 0%, transparent 60%), url('m_logo.PNG');
             background-size: cover; background-position: center; background-attachment: fixed;
-            color: var(--platinum); margin: 0; padding: 20px; padding-bottom: 240px; overflow-x: hidden;
+            color: var(--plat); margin: 0; padding: 20px; padding-bottom: 240px;
         }
 
-        /* AI PANEL */
-        .ai-panel {
-            background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(5, 5, 5, 1));
-            border: 1px solid rgba(0, 255, 255, 0.3); border-radius: 25px; padding: 20px; 
-            margin-bottom: 20px; box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
-            display: none; position: relative; z-index: 100;
-        }
-        .ai-header { font-size: 11px; font-weight: 900; color: var(--ai-blue); letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; }
-        .ai-chip { background: rgba(0, 255, 255, 0.05); padding: 12px; border-radius: 15px; font-size: 13px; border: 1px solid rgba(0, 255, 255, 0.2); cursor: pointer; margin-bottom: 8px; transition: 0.2s; }
-        .ai-chip:active { background: var(--ai-blue); color: #000; }
-
+        /* SMART HEADER */
         .header { text-align: center; padding: 40px 0 20px; }
-        .header-logo { width: 80px; filter: drop-shadow(0 0 20px var(--m-amber)); margin-bottom: 15px; }
-        .logo-text { font-family: 'Bodoni Moda', serif; font-size: 38px; font-weight: 900; text-transform: uppercase; display: flex; justify-content: center; gap: 10px; }
-        .logo-text .musik { color: var(--m-amber); }
+        .mode-indicator { font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; margin-bottom: 10px; font-weight: 900; opacity: 0.8; }
 
-        #results { display: flex; flex-direction: column; gap: 12px; }
-        .song-item { background: var(--glass); padding: 18px; border-radius: 25px; border: 1px solid rgba(255, 157, 0, 0.1); display: flex; align-items: center; gap: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
-        .title { font-weight: 800; font-size: 16px; color: var(--m-amber); margin-bottom: 4px; }
-        .path { font-size: 10px; color: rgba(255,255,255,0.3); font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        .btn { background: rgba(255, 255, 255, 0.05); color: var(--m-amber); border: 1px solid rgba(255, 157, 0, 0.2); padding: 12px; border-radius: 12px; font-size: 10px; font-weight: 900; flex: 1; text-transform: uppercase; margin-top: 10px;}
-
-        /* FOOTER & EMERGENCY */
-        .footer { position: fixed; bottom: 20px; left: 15px; right: 15px; z-index: 1000; }
-        .footer-content { background: rgba(10, 10, 10, 0.98); padding: 15px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(40px); box-shadow: 0 -10px 50px rgba(0,0,0,0.9); }
-        #search { width: 100%; padding: 16px; border-radius: 25px; border: none; background: rgba(255, 255, 255, 0.06); color: #fff; font-size: 18px; text-align: center; outline: none; font-family: 'Inter', sans-serif;}
-        
-        .emergency-btn {
-            background: var(--emergency); color: white; border: none; border-radius: 50%; width: 45px; height: 45px;
-            font-weight: 900; font-size: 10px; cursor: pointer; position: absolute; right: -5px; top: -15px;
-            box-shadow: 0 0 15px rgba(255, 59, 59, 0.5); animation: pulse 2s infinite;
+        /* PREDICTIVE AI PANEL */
+        #aiPanel { 
+            background: linear-gradient(145deg, #0a0a0a, #151515); 
+            border-left: 4px solid var(--ai-blue); border-radius: 15px; 
+            padding: 18px; margin-bottom: 20px; display: none;
+            box-shadow: 0 10px 30px rgba(0,255,255,0.05);
         }
+        .ai-status { font-size: 10px; color: var(--ai-blue); font-weight: 900; margin-bottom: 12px; display: flex; justify-content: space-between; }
+        .ai-chip { background: rgba(0,255,255,0.05); padding: 12px; border-radius: 12px; font-size: 13px; border: 1px solid rgba(0,255,255,0.1); margin-bottom: 8px; cursor: pointer; display: flex; justify-content: space-between; }
 
-        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 59, 59, 0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(255, 59, 59, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 59, 59, 0); } }
+        /* LIST DESIGN */
+        #results { display: flex; flex-direction: column; gap: 15px; }
+        .song-item { background: rgba(20,20,20,0.9); padding: 20px; border-radius: 25px; border: 1px solid rgba(255,157,0,0.1); position: relative; overflow: hidden; }
+        .song-item::after { content: ''; position: absolute; left: 0; top: 0; width: 4px; height: 100%; background: var(--amber); opacity: 0.5; }
+        .title { font-weight: 900; font-size: 17px; color: var(--amber); margin-bottom: 5px; text-transform: uppercase; }
+        .path { font-size: 10px; color: rgba(255,255,255,0.3); font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .btn { background: #fff; color: #000; border: none; padding: 14px; border-radius: 12px; font-size: 11px; font-weight: 900; width: 100%; margin-top: 12px; text-transform: uppercase; }
+
+        /* PREDICTIVE FOOTER */
+        .footer { position: fixed; bottom: 20px; left: 15px; right: 15px; z-index: 1000; }
+        .foot-wrap { background: rgba(10, 10, 10, 0.98); padding: 20px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.15); backdrop-filter: blur(30px); position: relative; }
+        #search { width: 100%; padding: 15px; border-radius: 20px; border: none; background: rgba(255,255,255,0.08); color: #fff; font-size: 18px; text-align: center; outline: none; font-weight: 700; }
+        
+        .sos-btn { 
+            position: absolute; right: 10px; top: -20px; width: 55px; height: 55px; 
+            background: #ff3b3b; border-radius: 50%; border: 4px solid #000; color: white; 
+            font-weight: 900; font-size: 10px; box-shadow: 0 0 20px rgba(255,59,59,0.4);
+        }
     </style>
 </head>
 <body>
-
     <div class="header">
-        <img src="m_logo.PNG" class="header-logo">
-        <h1 class="logo-text"><span>Miks</span><span class="musik">Musik</span></h1>
+        <div id="timeMode" class="mode-indicator">SYSTEM INITIALIZING...</div>
+        <img src="m_logo.PNG" style="width: 80px; filter: drop-shadow(0 0 20px var(--amber));">
     </div>
 
-    <div id="aiPanel" class="ai-panel">
-        <div class="ai-header">AI DJ ADVISOR • ANALYSIS READY</div>
-        <div id="aiContent" class="ai-suggestion-list"></div>
+    <div id="aiPanel">
+        <div class="ai-status"><span id="aiLabel">PREDICTIVE ANALYSIS</span> <span id="aiConf">98% MATCH</span></div>
+        <div id="aiContent"></div>
     </div>
 
     <div id="results"></div>
 
     <div class="footer">
-        <button class="emergency-btn" onclick="triggerEmergency()">SOS</button>
-        <div class="footer-content">
-            <div id="stat" style="text-align: center; font-size: 10px; color: var(--m-amber); margin-bottom: 8px; font-weight: 800; letter-spacing: 1px;">AI ELITE SYSTEM ONLINE</div>
-            <input type="text" id="search" placeholder="SØG TRACK..." onkeyup="handleSearch()" autocomplete="off" spellcheck="false">
+        <button class="sos-btn" onclick="triggerSOS()">SOS</button>
+        <div class="foot-wrap">
+            <input type="text" id="search" placeholder="SEARCH OR COMMAND..." onkeyup="handleSearch()" autocomplete="off">
+            <div id="stat" style="text-align: center; font-size: 9px; color: var(--amber); margin-top: 10px; font-weight: 800; letter-spacing: 1px;">M-ELITE AI V2.5 ONLINE</div>
         </div>
     </div>
 
@@ -89,54 +77,63 @@
         const aiPanel = document.getElementById('aiPanel');
         const aiContent = document.getElementById('aiContent');
 
+        // Peak Hour Logic
+        function updateMode() {
+            const hour = new Date().getHours();
+            const modeText = document.getElementById('timeMode');
+            if(hour >= 22 || hour <= 4) modeText.innerText = "⚡ PEAK HOUR MODE ACTIVE";
+            else if(hour >= 18) modeText.innerText = "🍸 WARM-UP MODE ACTIVE";
+            else modeText.innerText = "☕ LIBRARY MANAGEMENT MODE";
+        }
+        setInterval(updateMode, 60000); updateMode();
+
         function handleSearch() {
             const query = searchInput.value.toLowerCase().trim();
             if (query.length < 2) { resultsDiv.innerHTML = ''; aiPanel.style.display = 'none'; return; }
             const matches = mineSange.filter(s => s.navn.toLowerCase().includes(query));
-            renderResults(matches.slice(0, 25));
+            renderResults(matches.slice(0, 20));
         }
-
-        function triggerAI(name) {
-            aiPanel.style.display = 'block';
-            aiContent.innerHTML = '';
-            // AI algoritme: finder sange med lignende ord
-            const words = name.toLowerCase().split(' ').filter(w => w.length > 3);
-            const recs = mineSange.filter(s => s.navn !== name && words.some(w => s.navn.toLowerCase().includes(w))).slice(0, 2);
-            
-            let html = `<div style="font-size:11px; margin-bottom:10px; opacity:0.6;">BASERET PÅ DIT VALG, SPIL DEREFTER:</div>`;
-            recs.forEach(r => {
-                html += `<div class="ai-chip" onclick="quickSearch('${r.navn}')">🎯 ${r.navn}</div>`;
-            });
-            html += `<div style="margin-top:10px; font-size:9px; color:var(--ai-blue); font-weight:800;">INFO: Du mangler 'Extended Mix' af dette track.</div>`;
-            aiContent.innerHTML = html;
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-
-        function triggerEmergency() {
-            // Finder "sikre" bangers
-            const bangers = mineSange.filter(s => s.navn.toLowerCase().includes('remix') || s.navn.toLowerCase().includes('edit') || s.navn.toLowerCase().includes('club')).slice(0, 10);
-            searchInput.value = "";
-            renderResults(bangers);
-            document.getElementById('stat').innerText = "EMERGENCY BANGERS LOADED!";
-            aiPanel.style.display = 'none';
-        }
-
-        function quickSearch(name) { searchInput.value = name; handleSearch(); }
 
         function renderResults(songs) {
             resultsDiv.innerHTML = '';
             songs.forEach(s => {
                 const div = document.createElement('div');
                 div.className = 'song-item';
-                div.innerHTML = `<div class="song-info"><div class="title">${s.navn}</div><div class="path">${s.sti}</div><button class="btn" onclick="copyAction('${s.sti.replace(/'/g, "\\'")}', '${s.navn.replace(/'/g, "\\'")}')">KOPIÉR & ANALYSÉR</button></div>`;
+                div.innerHTML = `<div class="title">${s.navn}</div><div class="path">${s.sti}</div><button class="btn" onclick="copyAction('${s.sti.replace(/'/g, "\\'")}', '${s.navn.replace(/'/g, "\\'")}')">SELECT TRACK</button>`;
                 resultsDiv.appendChild(div);
             });
         }
 
         function copyAction(path, name) {
             navigator.clipboard.writeText(path);
-            triggerAI(name);
-            document.getElementById('stat').innerText = "COPIED TO CLIPBOARD";
+            aiPanel.style.display = 'block';
+            
+            // Predictive Intelligence
+            const words = name.toLowerCase().split(' ').filter(w => w.length > 3);
+            const recs = mineSange.filter(s => s.navn !== name && words.some(w => s.navn.toLowerCase().includes(w))).slice(0, 2);
+            
+            let html = '';
+            recs.forEach(r => html += `<div class="ai-chip" onclick="quickS('${r.navn.replace(/'/g, "\\'")}')"><span>NEXT TRACK:</span> <strong>${r.navn}</strong></div>`);
+            
+            // Missing Link Intelligence
+            const tips = ["Check for 2026 Remix", "Instrumental missing", "Acapella available online"];
+            html += `<div style="font-size:10px; color:var(--ai-blue); margin-top:10px; font-weight:800; border-top:1px solid rgba(0,255,255,0.1); padding-top:10px;">💡 AI CRATE-DIGGER: ${tips[Math.floor(Math.random()*tips.length)]}</div>`;
+            
+            aiContent.innerHTML = html;
+            document.getElementById('stat').innerText = "TRACK LOADED - AI UPDATED";
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function quickS(n) { searchInput.value = n; handleSearch(); }
+
+        function triggerSOS() { 
+            const hour = new Date().getHours();
+            let filter = /remix|edit|club/;
+            if (hour >= 22 || hour <= 4) filter = /banger|hype|drop|handsup/; // Peak hour SOS
+            
+            const sos = mineSange.filter(s => s.navn.toLowerCase().match(filter)).slice(0, 15);
+            renderResults(sos);
+            document.getElementById('stat').innerText = "PEAK HOUR SOS LOADED!";
         }
     </script>
 </body>
