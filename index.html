@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>M-ELITE COMMAND PRO</title>
+    <title>M-ELITE SPOTIFY STYLE</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --accent: #00f2ff; 
-            --bg: #000; 
-            --card: #0a0a0a;
-            --border: #1a1a1a;
-            --text-dim: #444;
+            --spotify-green: #1DB954; 
+            --bg: #121212; 
+            --card: #181818;
+            --card-hover: #282828;
+            --border: rgba(255, 255, 255, 0.1);
         }
         
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -22,132 +22,136 @@
             height: 100vh; display: flex; flex-direction: column; overflow: hidden;
         }
 
-        /* COMPACT HEADER */
-        header { 
-            padding: 45px 20px 5px; 
-            text-align: left; 
-            border-bottom: 1px solid var(--border);
-        }
-        .app-title { 
-            font-weight: 800; font-size: 10px; letter-spacing: 3px; 
-            color: var(--accent); text-transform: uppercase;
-        }
+        /* HEADER */
+        header { padding: 50px 20px 10px; flex-shrink: 0; }
+        .app-title { font-weight: 800; font-size: 10px; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
 
         /* SEARCH AREA */
-        .controls { padding: 15px 20px; background: rgba(0,0,0,0.5); }
+        .controls { padding: 10px 20px 20px; flex-shrink: 0; }
         .search-wrap { 
-            background: #111; 
-            border: 1px solid var(--border); 
-            border-radius: 14px; padding: 12px 15px; display: flex; align-items: center; 
+            background: #242424; border-radius: 8px; padding: 12px 15px; 
+            display: flex; align-items: center; border: 1px solid transparent;
         }
+        .search-wrap:focus-within { border-color: #fff; }
         #search { 
             background: transparent; border: none; color: #fff; width: 100%; 
-            font-size: 16px; font-weight: 600; outline: none;
+            font-size: 14px; font-weight: 600; outline: none;
         }
 
-        /* CATEGORY PILLS */
+        /* TABS (PILLS) */
         .tabs { display: flex; gap: 8px; overflow-x: auto; padding: 10px 0; scrollbar-width: none; }
         .tabs::-webkit-scrollbar { display: none; }
         .tab { 
-            background: #0a0a0a; border: 1px solid var(--border); color: var(--text-dim); 
-            padding: 8px 16px; border-radius: 10px; font-size: 10px; 
-            font-weight: 800; white-space: nowrap; text-transform: uppercase;
+            background: #2a2a2a; color: #fff; padding: 8px 16px; 
+            border-radius: 20px; font-size: 12px; font-weight: 600; 
+            white-space: nowrap; border: none;
         }
-        .tab.active { background: var(--accent); color: #000; border-color: var(--accent); }
+        .tab.active { background: var(--spotify-green); color: #000; }
 
-        /* OPTIMIZED TRACK LIST */
+        /* SPOTIFY GRID LAYOUT */
         #results { 
-            flex-grow: 1; overflow-y: auto; padding: 5px 20px 120px; 
-            -webkit-overflow-scrolling: touch;
+            flex-grow: 1; overflow-y: auto; padding: 10px 15px 120px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 kasser ved siden af hinanden */
+            gap: 12px;
         }
-        .track { 
-            background: var(--card); border-bottom: 1px solid var(--border); 
-            padding: 14px 10px; display: flex; align-items: center; justify-content: space-between;
-            transition: 0.1s;
-        }
-        .track:active { background: rgba(0, 242, 255, 0.2); }
-        .track.copied { background: var(--accent) !important; color: #000 !important; }
-        
-        .t-info { flex: 1; min-width: 0; }
-        .t-name { font-weight: 700; font-size: 13px; color: #eee; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .t-path { font-size: 8px; color: var(--text-dim); text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
-        .copy-hint { font-size: 8px; font-weight: 900; color: var(--accent); opacity: 0.5; }
 
-        /* PROFESSIONAL DOCK */
+        .track-card { 
+            background: var(--card); padding: 15px; border-radius: 8px;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            aspect-ratio: 1 / 1; /* Gør kasserne kvadratiske */
+            position: relative;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        /* Baggrunds-effekt i kassen (ligesom Spotify genrer) */
+        .track-card::before {
+            content: "";
+            position: absolute;
+            top: -20%; right: -20%;
+            width: 80%; height: 80%;
+            background: linear-gradient(135deg, var(--spotify-green) 0%, transparent 100%);
+            opacity: 0.1;
+            transform: rotate(20deg);
+        }
+
+        .track-card:active { background: var(--card-hover); transform: scale(0.96); }
+        .track-card.copied { background: var(--spotify-green) !important; }
+        .track-card.copied .t-name, .track-card.copied .t-path { color: #000; }
+        
+        .t-name { 
+            font-weight: 700; font-size: 13px; color: #fff; 
+            margin-bottom: 5px; z-index: 2;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .t-path { 
+            font-size: 8px; color: #b3b3b3; text-transform: uppercase; 
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; z-index: 2;
+        }
+
+        /* BOTTOM DOCK */
         .dock { 
             position: fixed; bottom: 0; left: 0; right: 0; 
-            background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border); 
-            padding: 15px 20px 35px; display: flex; justify-content: space-around; 
+            background: linear-gradient(to top, #000, transparent);
+            padding: 20px 20px 40px; display: flex; justify-content: center; 
         }
-        .dock-btn { 
-            border: none; background: transparent; color: var(--text-dim); 
-            font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
-            display: flex; flex-direction: column; align-items: center; gap: 4px;
+        .panic-btn { 
+            background: var(--spotify-green); color: #000; border: none;
+            padding: 12px 30px; border-radius: 30px; font-weight: 800;
+            font-size: 12px; letter-spacing: 1px; box-shadow: 0 10px 20px rgba(29, 185, 84, 0.3);
         }
-        .dock-btn.active { color: var(--accent); }
-        .panic-btn { color: #ff3b3b !important; }
 
-        .status { font-size: 8px; color: #222; text-align: center; margin-top: 40px; letter-spacing: 2px; }
+        .status { text-align: center; color: #555; grid-column: span 2; padding: 40px; font-size: 10px; font-weight: 800; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
-<header><div class="app-title">M-Elite Command Center</div></header>
+<header><div class="app-title">M-Elite Music</div></header>
 
 <div class="controls">
     <div class="search-wrap">
-        <input type="text" id="search" placeholder="SEARCH 9000+ TRACKS..." onkeyup="filter()" autocomplete="off">
+        <input type="text" id="search" placeholder="Hvad vil du høre?" onkeyup="filter()" autocomplete="off">
     </div>
     <div class="tabs">
-        <div class="tab active" onclick="setVibe('', this)">Library</div>
-        <div class="tab" onclick="setVibe('dansk', this)">🇩🇰 Dansk</div>
-        <div class="tab" onclick="setVibe('house', this)">💃 House</div>
-        <div class="tab" onclick="setVibe('remix', this)">🔥 Remix</div>
-        <div class="tab" onclick="setVibe('retro', this)">⏪ Retro</div>
+        <div class="tab active" onclick="setVibe('', this)">Alt</div>
+        <div class="tab" onclick="setVibe('dansk', this)">Dansk</div>
+        <div class="tab" onclick="setVibe('house', this)">House</div>
+        <div class="tab" onclick="setVibe('remix', this)">Remix</div>
     </div>
 </div>
 
 <div id="results">
-    <div class="status" id="status">INITIALIZING DATABASE...</div>
+    <div class="status" id="status">INDLÆSER ARKIV...</div>
 </div>
 
 <div class="dock">
-    <button class="dock-btn active" onclick="location.reload()">
-        <span>SEARCH</span>
-    </button>
-    <button class="dock-btn" onclick="setVibe('2024', null)">
-        <span>NEWEST</span>
-    </button>
-    <button class="dock-btn panic-btn" onclick="panic()">
-        <span>PANIC</span>
-    </button>
+    <button class="panic-btn" onclick="panic()">PANIC MODE</button>
 </div>
 
 <script>
     let db = [];
     let vibe = '';
 
-    // VI BEHOLDER DIN RECOVERY NØGLE SÅ ALT VIRKER
+    // Vi beholder backup-linket så du har dine 9000+ sange
     async function init() {
         try {
             const response = await fetch('https://raw.githubusercontent.com/miksdk84-pixel/minmusik/4bf097e2ae15eb35c9b3c8ffa0b2c394bbe374b0/musik_data.js');
             let text = await response.text();
             text = text.trim().replace(/const mineSange\s*=\s*/, '').replace(/;$/, '');
             db = JSON.parse(text);
-            document.getElementById('status').innerHTML = db.length + " TRACKS READY";
+            document.getElementById('status').innerHTML = "KLAR TIL MIX (" + db.length + ")";
             filter();
         } catch (e) {
-            document.getElementById('status').innerHTML = "OFFLINE MODE";
+            document.getElementById('status').innerHTML = "SYSTEM FEJL";
         }
     }
 
     function setVibe(v, el) {
-        if(el) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            el.classList.add('active');
-        }
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
         vibe = v;
         filter();
     }
@@ -155,21 +159,21 @@
     function filter() {
         const q = document.getElementById('search').value.toLowerCase();
         const res = document.getElementById('results');
+        
         if (q.length < 2 && vibe === '') {
-            res.innerHTML = '<div class="status">READY FOR SELECTION</div>';
+            res.innerHTML = '<div class="status">SØG ELLER VÆLG KATEGORI</div>';
             return;
         }
+
         const matches = db.filter(s => {
             const txt = ((s.navn || '') + (s.sti || '')).toLowerCase();
             return txt.includes(q) && txt.includes(vibe);
         });
-        res.innerHTML = matches.slice(0, 60).map(s => `
-            <div class="track" onclick="copy(this, '${(s.sti || '').replace(/'/g, "\\'")}')">
-                <div class="t-info">
-                    <div class="t-name">${s.navn || 'Unknown'}</div>
-                    <div class="t-path">${s.sti || ''}</div>
-                </div>
-                <div class="copy-hint">COPY</div>
+
+        res.innerHTML = matches.slice(0, 50).map(s => `
+            <div class="track-card" onclick="copy(this, '${(s.sti || '').replace(/'/g, "\\'")}')">
+                <div class="t-name">${s.navn || 'Ukendt'}</div>
+                <div class="t-path">${s.sti || ''}</div>
             </div>
         `).join('');
     }
@@ -177,12 +181,12 @@
     function copy(el, p) {
         navigator.clipboard.writeText(p);
         el.classList.add('copied');
-        setTimeout(() => el.classList.remove('copied'), 200);
+        setTimeout(() => el.classList.remove('copied'), 300);
     }
 
     function panic() {
         document.getElementById('search').value = "";
-        setVibe('remix', null);
+        setVibe('remix', document.querySelectorAll('.tab')[3]);
     }
 
     init();
