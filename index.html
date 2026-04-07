@@ -6,13 +6,13 @@
     
     <link rel="apple-touch-icon" href="Fire_m.HEIC">
     
-    <title>ListeAPPEN</title>
+    <title>MiksMusik</title>
     <style>
         :root {
             --primary: #FFD700;    /* Guld */
             --accent: #FF4500;     /* Flamme-orange */
             --bg: #000000;         
-            --card: rgba(20, 20, 20, 0.9); /* Gennemsigtige kort så man ser flammerne bagved */
+            --card: rgba(20, 20, 20, 0.9); /* Gennemsigtige kort */
             --text: #ffffff;
             --header-height: 140px; 
         }
@@ -20,8 +20,8 @@
         body { 
             font-family: -apple-system, system-ui, sans-serif; 
             background-color: var(--bg); 
-            /* Her lægger vi Fire-M som den store baggrund */
-            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('Fire_m.HEIC');
+            /* Fire-M som baggrund */
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('Fire_m.HEIC');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -43,7 +43,7 @@
         }
 
         .header-logo {
-            width: 140px;
+            width: 130px;
             height: auto;
             border-radius: 20px;
             box-shadow: 0 0 25px var(--accent);
@@ -124,15 +124,15 @@
 <body>
 
     <div class="header">
-        <img src="Fire_m.HEIC" alt="Logo" class="header-logo">
-        <h1>Liste<span>APPEN</span></h1>
+        <img src="Fire_m.HEIC" alt="MiksMusik Logo" class="header-logo">
+        <h1>Miks<span>Musik</span></h1>
     </div>
 
     <div id="results"></div>
 
     <div class="footer">
         <div class="stat-text" id="stat">Henter arkiv...</div>
-        <input type="text" id="search" placeholder="Søg i din musik..." onkeyup="handleSearch()">
+        <input type="text" id="search" placeholder="Find min musik" onkeyup="handleSearch()">
     </div>
 
     <script src="musik_data.js"></script>
@@ -172,7 +172,7 @@
 
         function copyText(text) {
             navigator.clipboard.writeText(text);
-            alert("Kopieret!");
+            alert("Stien er kopieret til din udklipsholder!");
         }
     </script>
 </body>
