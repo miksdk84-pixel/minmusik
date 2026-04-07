@@ -3,122 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
     <link rel="apple-touch-icon" href="m_logo.PNG">
     
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,900;1,400&family=Inter:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;800&display=swap" rel="stylesheet">
     
-    <title>MiksMusik Elite</title>
+    <title>MiksMusik M-ELITE</title>
     <style>
         :root {
-            --gold: #c5a059;       /* Champagne Guld */
-            --platinum: #e5e5e5;   /* Platin Hvid */
-            --bg: #050505;         /* Ultra Sort */
-            --glass: rgba(255, 255, 255, 0.03);
-            --header-height: 130px;
+            /* Metalliske Liquid Glass farver */
+            --primary: #D4AF37;    /* Metallisk Guld */
+            --accent: #EAEAEA;     /* Metallisk Sølv/Hvid */
+            --bg: #000000;         
+            --glass: rgba(255, 255, 255, 0.03); /* Ultra-tyndt glas */
+            --glass-border: rgba(255, 215, 0, 0.1); /* Guld-kant på glas */
+            --text: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.5);
+            --header-height: 140px; 
         }
 
         body { 
-            font-family: 'Inter', sans-serif;
+            font-family: 'Lexend', -apple-system, system-ui, sans-serif; 
             background-color: var(--bg); 
-            background-image: radial-gradient(circle at 50% -10%, rgba(197, 160, 89, 0.15) 0%, transparent 50%), url('m_logo.PNG');
+            /* Baggrund: Dit M-logo, stort og dæmpet bag glasset */
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('m_logo.PNG');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: var(--platinum); 
+            color: var(--text); 
             margin: 0; 
             padding: 20px;
-            padding-bottom: calc(var(--header-height) + 40px);
+            padding-top: calc(env(safe-area-inset-top) + 20px);
+            padding-bottom: calc(var(--header-height) + 20px);
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        /* SPOTLIGHT EFFEKT */
-        .spotlight {
-            position: fixed;
-            top: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            height: 300px;
-            background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 1;
+        /* Resultat-området */
+        #results {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
+        /* LIQUID GLASS KORT */
+        .song-item { 
+            background: var(--glass); 
+            padding: 15px; 
+            border-radius: 25px; 
+            border: 1px solid var(--glass-border);
+            /* Kraftig baggrunds-sløring (Liquid-effekt) */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .song-item:active { transform: scale(0.97); background: rgba(255, 215, 0, 0.1); }
+
+        /* ALBUM COVER STIL */
+        .cover-art {
+            width: 65px;
+            height: 65px;
+            border-radius: 15px;
+            object-fit: cover;
+            /* Standard cover: Dit M-logo, metallisk */
+            background-image: url('m_logo.PNG'); 
+            background-size: cover;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            flex-shrink: 0;
+        }
+
+        .song-info { flex-grow: 1; min-width: 0; }
+        .title { font-weight: 800; display: block; margin-bottom: 4px; font-size: 18px; color: var(--text); letter-spacing: -0.5px; }
+        .path { color: var(--text-dim); font-size: 10px; word-break: break-all; opacity: 0.8; font-family: 'SF Mono', monospace;}
+
+        /* KONTROLLER PÅ GLAS-KORT */
+        .controls { display: flex; gap: 8px; margin-top: 10px; }
+        .btn {
+            background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); 
+            padding: 10px 14px; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer;
+            flex: 1; text-align: center; backdrop-filter: blur(5px);
+        }
+        .btn:active { background: var(--primary); color: #000; border-color: var(--primary); }
+
+        /* HEADEREN MED LOGO */
         .header {
             text-align: center;
-            padding: 60px 0 40px;
-            position: relative;
-            z-index: 2;
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .header-logo {
-            width: 110px;
+            width: 100px;
             height: auto;
-            margin-bottom: 25px;
-            filter: drop-shadow(0 0 20px rgba(0,0,0,0.8));
+            margin: 0 auto 15px auto;
+            display: block;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
         }
 
-        /* ELEGANT LOGO TEKST */
-        .logo-text {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 38px;
-            font-weight: 900;
-            letter-spacing: -1px;
-            text-transform: uppercase;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-        }
+        h2 { margin: 0; font-size: 32px; font-weight: 300; letter-spacing: -2px; text-transform: uppercase; color: var(--accent); }
+        h2 span { font-weight: 800; color: var(--primary); text-shadow: 0 0 15px rgba(212,175,55,0.4); }
 
-        .logo-text .miks {
-            color: var(--platinum);
-            font-style: italic;
-            font-weight: 400;
-        }
-
-        .logo-text .musik {
-            color: var(--gold);
-            background: linear-gradient(to bottom, #f1d39b, #96702d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        #results { display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 2; }
-
-        .song-item { 
-            background: var(--glass); 
-            padding: 16px; 
-            border-radius: 20px; 
-            border: 1px solid rgba(255,215,0,0.08);
+        /* BUND-SEKTIONEN (Svævende Søgefelt) */
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(10, 10, 10, 0.85);
+            z-index: 100;
+            border: 1px solid var(--glass-border);
+            padding: 15px;
+            box-sizing: border-box;
+            border-radius: 40px;
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            display: flex; align-items: center; gap: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.7);
         }
 
-        .cover-art {
-            width: 60px; height: 60px; border-radius: 12px;
-            object-fit: cover; background: #111;
-            border: 1px solid rgba(255,255,255,0.05);
+        .stat-bar {
+            width: 100%;
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
         }
 
-        .title { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 16px; color: var(--platinum); }
-        .path { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 4px; font-family: monospace; }
-
-        .btn {
-            background: rgba(255,255,255,0.03); color: var(--gold); border: 1px solid rgba(197,160,89,0.2);
-            padding: 8px 12px; border-radius: 10px; font-size: 11px; font-weight: 600; margin-top: 10px;
-        }
-
-        /* FLOATING SEARCH */
-        .footer {
-            position: fixed; bottom: 30px; left: 20px; right: 20px;
-            background: rgba(10, 10, 10, 0.85);
-            padding: 15px; border-radius: 30px;
-            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255,255,255,0.1);
-            z-index: 100;
-        }
-
+        .search-wrapper { position: relative; width: 100%; max-width: 500px; }
         #search { 
-            width: 100%; padding
+            width: 100%; padding: 16px 25px; box-sizing: border-box;
+            border-radius: 30px; border: none; font-size: 18px;
+            background: rgba(255,255,255,0.06); color: white; outline: none;
+            text-align: center; font-family: 'Lexend', sans-serif;
+        }
+        #search:focus { background: rgba(255,255,255,0.12); box-shadow: 0 0 20px rgba(212, 175, 55, 0.15); }
+        #search::placeholder { color: rgba(255,255,255,0.4); }
+        
+        .clear-btn {
+            position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.1); color: white; border: none; border-radius: 50%;
+            width: 26px; height: 26px; cursor: pointer; display: none;
+        }
+
+        .no-results { text-align: center; color: var(--text-dim); margin-top: 60px; font-size: 15px;}
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="m_logo.PNG" alt="MiksMusik M-ELITE" class="header-logo">
+        <h2>MIKS<span>MUSIK</span></h2>
+    </div>
+
+    <div id="results"></div>
+
+    <div class="footer">
+        <div class="stat-bar">
+            <div id="stat">SCANNER ELITE DATABASE...</div>
+        </div>
+        <div class="search-wrapper">
+            <input type="text" id="search" placeholder="FIND DIT TRACK..." onkeyup="handleSearch()" spellcheck="false" autocomplete="off">
+            <button id="clearSearch" class="clear-btn" onclick="clearInput()">✕</button>
+        </div>
+    </div>
+
+    <script src="musik_data.js"></script>
+    <script>
+        const resultsDiv = document.getElementById('results');
+        const searchInput = document.getElementById('search');
+        const clearBtn = document.getElementById('clearSearch');
+
+        if (typeof mineSange !== 'undefined') {
+            document.getElementById('stat').innerText = mineSange.length.toLocaleString() + " TRACKS ANALYZED";
+        }
+
+        function clearInput() {
+            searchInput.value = '';
+            clearBtn.style.display = 'none';
+            resultsDiv.innerHTML = '';
+            searchInput.focus();
+        }
+
+        function handleSearch() {
+            const query = searchInput.value.toLowerCase();
+            clearBtn.style.display = query.length > 0 ? 'block' : 'none';
+            
+            if (query.length < 2) {
+                resultsDiv.innerHTML = '';
+                return;
+            }
+
+            const queryWords = query.split(' ').filter(w => w.length > 0);
+            const matches = mineSange.filter(s => {
+                const navn = s.navn.toLowerCase();
+                return queryWords.every(word => navn.includes(word));
+            });
+
+            renderResults(matches.slice(0, 40));
+        }
+
+        // Henter albumcovers fra iTunes API
+        async function fetchCover(songName, imgElement) {
+            try {
+                const response = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(songName)}&entity=song&limit=1`);
+                const data = await response.json();
+                if (data.results && data.results.length > 0) {
+                    imgElement.src = data.results[0].artworkUrl100.replace('100x100bb', '200x200bb');
+                }
+            } catch (e) {
+                // Fejl: standardbaggrunden (m_logo.PNG) vises automatisk
+                console.log("Cover ikke fundet til: " + songName);
+            }
+        }
+
+        function renderResults(songs) {
+            resultsDiv.innerHTML = songs.length === 0 ? '<div class="no-results">INTRET MATCH I DATABASE</div>' : '';
+            songs.forEach(s => {
+                const div = document.createElement('div');
+                div.className = 'song-item';
+                
+                // Unikt ID til cover-billedet
+                const imgId = 'img-' + Math.random().toString(36).substr(2, 9);
+                
+                div.innerHTML = `
+                    <img src="" class="cover-art" id="${imgId}">
+                    <div class="song-info">
+                        <span class="title">${s.navn}</span>
+                        <span class="path">${s.sti}</span>
+                        <div class="controls">
+                            <button class="btn" onclick="copyText('${s.sti.replace(/'/g, "\\'")}')">📋 KOPIÉR STI</button>
+                            <button class="btn" onclick="showFolder('${s.sti.substring(0, s.sti.lastIndexOf('/')).replace(/'/g, "\\'")}')">📂 VIS MAPPE</button>
+                        </div>
+                    </div>
+                `;
+                resultsDiv.appendChild(div);
+                
+                // Hent coveret asynkront
+                fetchCover(s.navn, document.getElementById(imgId));
+            });
+        }
+
+        function showFolder(path) {
+            searchInput.value = path; 
+            handleSearch(); // Start søgningen med mappestien
+            // Rul helt op til toppen af resultaterne
+            window.scrollTo({ top: resultsDiv.offsetTop - 20, behavior: 'smooth' });
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            alert("Kopieret! Indsæt den på din computer.");
+        }
+    </script>
+</body>
+</html>
