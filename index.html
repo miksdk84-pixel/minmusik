@@ -3,127 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
     <link rel="apple-touch-icon" href="m_logo.PNG">
+    
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <title>MiksMusik BIF DONG</title>
+    
+    <title>MiksMusik Brøndby Elite</title>
     <style>
         :root {
             --bif-yellow: #FDE100; 
             --bif-blue: #00529E;   
-            --bg: #000000;
+            --bg: #000000;         
+            --glass: rgba(0, 25, 50, 0.95); /* Ultra mørkt glas for max læsbarhed */
+            --header-height: 150px;
         }
 
         body { 
             font-family: 'Inter', sans-serif;
             background-color: var(--bg); 
-            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('m_logo.PNG');
-            background-size: cover; background-position: center; background-attachment: fixed;
-            color: #ffffff; margin: 0; padding: 20px; padding-bottom: 220px;
+            background-image: radial-gradient(circle at 50% 0%, rgba(253, 225, 0, 0.1) 0%, transparent 60%), 
+                              linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.95)), 
+                              url('m_logo.PNG');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff; 
+            margin: 0; 
+            padding: 20px;
+            padding-bottom: calc(var(--header-height) + 50px);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        .header { text-align: center; padding: 40px 0 20px; }
-        .header-logo { width: 70px; filter: drop-shadow(0 0 15px var(--bif-blue)); }
+        .spotlight {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 300px;
+            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .header {
+            text-align: center;
+            padding: 50px 0 30px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .header-logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 20px var(--bif-blue));
+        }
 
         .logo-text {
-            font-family: 'Bodoni Moda', serif; font-size: 32px; font-weight: 900;
-            text-transform: uppercase; display: flex; justify-content: center; gap: 8px;
-        }
-        .logo-text .miks { color: var(--bif-yellow); font-style: italic; }
-        .logo-text .musik { color: var(--bif-blue); }
-
-        /* DEN STORE DONG KNAP */
-        .dong-master-container {
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .big-dong-btn {
-            background: linear-gradient(45deg, var(--bif-blue), #003d75);
-            color: var(--bif-yellow);
-            border: 4px solid var(--bif-yellow);
-            padding: 30px;
-            border-radius: 30px;
-            font-size: 24px;
+            font-family: 'Bodoni Moda', serif;
+            font-size: 36px;
             font-weight: 900;
-            width: 100%;
             text-transform: uppercase;
-            box-shadow: 0 0 30px rgba(253, 225, 0, 0.4);
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             gap: 10px;
+            margin: 0;
         }
 
-        .big-dong-btn:active {
-            transform: scale(0.95);
-            background: var(--bif-yellow);
-            color: var(--bif-blue);
-        }
+        .logo-text .miks { color: #ffffff; font-style: italic; }
+        .logo-text .musik { color: var(--bif-yellow); text-shadow: 0 0 15px rgba(253, 225, 0, 0.4); }
 
-        .big-dong-btn span { font-size: 14px; opacity: 0.8; font-weight: 400; }
-
-        #results { display: flex; flex-direction: column; gap: 12px; }
+        #results { display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 20; }
 
         .song-item { 
-            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; 
-            border: 1px solid rgba(253, 225, 0, 0.1); display: flex; align-items: center; gap: 15px;
+            background: var(--glass); 
+            padding: 20px; 
+            border-radius: 28px; 
+            border: 1px solid rgba(253, 225, 0, 0.2);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            display: flex; 
+            align-items: center; 
+            gap: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
 
-        .title { font-weight: 700; color: var(--bif-yellow); }
-        .path { font-size: 10px; color: rgba(255,255,255,0.3); font-family: monospace; }
+        .cover-art {
+            width: 60px; height: 60px; border-radius: 12px;
+            object-fit: cover; background: #000;
+            border: 1px solid var(--bif-blue);
+            flex-shrink: 0;
+        }
+
+        .song-info { flex: 1; min-width: 0; }
+        .title { 
+            font-weight: 800; font-size: 18px; color: var(--bif-yellow); 
+            margin-bottom: 5px; text-shadow: 0 1px 3px rgba(0,0,0,1); 
+        }
+        .path { 
+            font-size: 11px; color: rgba(255,255,255,0.4); 
+            font-family: monospace; white-space: nowrap; 
+            overflow: hidden; text-overflow: ellipsis; 
+        }
+
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+        .btn {
+            background: var(--bif-blue); color: white; border: none;
+            padding: 14px; border-radius: 14px; font-size: 11px; font-weight: 900; 
+            flex: 1; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn:active { background: var(--bif-yellow); color: #000; }
+        .btn-folder { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); }
 
         .footer {
-            position: fixed; bottom: 30px; left: 15px; right: 15px;
-            background: rgba(0, 82, 158, 0.95); padding: 15px; border-radius: 35px;
-            border: 2px solid var(--bif-yellow); z-index: 1000;
+            position: fixed; 
+            bottom: 30px; 
+            left: 20px; 
+            right: 20px;
+            background: rgba(0, 82, 158, 0.98);
+            padding: 20px; 
+            border-radius: 40px;
+            backdrop-filter: blur(50px);
+            border: 2px solid var(--bif-yellow);
+            z-index: 1000;
+            box-shadow: 0 -10px 50px rgba(0,0,0,0.8);
         }
+
         #search { 
-            width: 100%; padding: 15px; border-radius: 25px; border: none;
-            background: #fff; color: #000; font-size: 18px; font-weight: 700; text-align: center;
+            width: 100%; 
+            padding: 18px; 
+            border-radius: 25px; 
+            border: none;
+            background: #ffffff; 
+            color: #000; 
+            font-size: 18px;
+            text-align: center; 
+            outline: none;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .stat-text { 
+            text-align: center; font-size: 10px; color: var(--bif-yellow); 
+            margin-bottom: 10px; font-weight: 900; letter-spacing: 2px; 
         }
     </style>
 </head>
 <body>
 
+    <div class="spotlight"></div>
+
     <div class="header">
         <img src="m_logo.PNG" class="header-logo">
-        <h1 class="logo-text"><span class="miks">Miks</span><span class="musik">Musik</span></h1>
-    </div>
-
-    <div class="dong-master-container">
-        <button class="big-dong-btn" onclick="playDong()">
-            MÅÅÅÅÅL!
-            <span>Hjerterne er gule - sjælen er blå</span>
-        </button>
+        <h1 class="logo-text">
+            <span class="miks">Miks</span><span class="musik">Musik</span>
+        </h1>
     </div>
 
     <div id="results"></div>
 
     <div class="footer">
-        <input type="text" id="search" placeholder="SØG MUSIK..." onkeyup="handleSearch()" autocomplete="off">
+        <div class="stat-text" id="stat">VESTEGNEN SYSTEM ACTIVE</div>
+        <input type="text" id="search" placeholder="FIND DIN MUSIK..." onkeyup="handleSearch()" autocomplete="off" spellcheck="false">
     </div>
-
-    <audio id="dongAudio" src="bif-dong.mp3" preload="auto"></audio>
 
     <script src="musik_data.js"></script>
     <script>
         const resultsDiv = document.getElementById('results');
         const searchInput = document.getElementById('search');
-        const audio = document.getElementById('dongAudio');
 
-        function playDong() {
-            // Spiller lyden
-            audio.currentTime = 0; // Start forfra hver gang
-            audio.play().catch(e => alert("Husk at uploade bif-dong.mp3 til GitHub!"));
-            
-            // Kopierer også teksten til din computer hvis du bruger den
-            navigator.clipboard.writeText("Hjerterne er gule - sjælen er blå");
+        if (typeof mineSange !== 'undefined') {
+            document.getElementById('stat').innerText = mineSange.length.toLocaleString() + " TRACKS ANALYZED";
         }
 
         function handleSearch() {
             const query = searchInput.value.toLowerCase().trim();
             if (query.length < 2) { resultsDiv.innerHTML = ''; return; }
-            const matches = mineSange.filter(s => s.navn.toLowerCase().includes(query));
-            renderResults(matches.slice(0, 20));
+            const queryWords = query.split(" ");
+            const matches = mineSange.filter(s => {
+                const sangeNavn = s.navn.toLowerCase();
+                return queryWords.every(word => sangeNavn.includes(word));
+            });
+            renderResults(matches.slice(0, 30));
+        }
+
+        async function fetchCover(songName, imgElement) {
+            try {
+                const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(songName)}&entity=song&limit=1`);
+                const data = await res.json();
+                if (data.results[0]) imgElement.src = data.results[0].artworkUrl100.replace('100x100', '300x300');
+            } catch (e) { imgElement.src = 'm_logo.PNG'; }
         }
 
         function renderResults(songs) {
@@ -131,10 +198,35 @@
             songs.forEach(s => {
                 const div = document.createElement('div');
                 div.className = 'song-item';
-                div.innerHTML = `<div class="song-info"><div class="title">${s.navn}</div><div class="path">${s.sti}</div></div>`;
-                div.onclick = () => { navigator.clipboard.writeText(s.sti); alert("Kopieret!"); };
+                const imgId = 'img-' + Math.random().toString(36).substr(2, 5);
+                div.innerHTML = `
+                    <img src="m_logo.PNG" class="cover-art" id="${imgId}">
+                    <div class="song-info">
+                        <div class="title">${s.navn}</div>
+                        <div class="path">${s.sti}</div>
+                        <div class="btn-group">
+                            <button class="btn" onclick="copyText('${s.sti.replace(/'/g, "\\'")}')">KOPIÉR STI</button>
+                            <button class="btn btn-folder" onclick="showFolder('${s.sti.substring(0, s.sti.lastIndexOf('/')).replace(/'/g, "\\'")}')">VIS MAPPE</button>
+                        </div>
+                    </div>
+                `;
                 resultsDiv.appendChild(div);
+                fetchCover(s.navn, document.getElementById(imgId));
             });
+        }
+
+        function showFolder(path) {
+            searchInput.value = path;
+            handleSearch();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            document.getElementById('stat').innerText = "KOPIERET!";
+            setTimeout(() => {
+                document.getElementById('stat').innerText = "VESTEGNEN SYSTEM ACTIVE";
+            }, 2000);
         }
     </script>
 </body>
