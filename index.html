@@ -5,191 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <link rel="apple-touch-icon" href="m_logo.PNG">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <title>M-SANDBOX DANISH BRIEF</title>
+    <title>M-ELITE MUSIC COMMAND</title>
     <style>
-        :root { 
-            --amber: #ff9d00; 
-            --bg: #000000; 
-            --card: #0c0c0c; 
-            --red: #ff3b3b; 
-            --green: #00ff88; 
-            --gray: #222222;
-            --dk-red: #c60c30; /* Dannebrog Rød */
+        :root { --amber: #ff9d00; --bg: #000; --card: #111; --text: #fff; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; overflow-x: hidden; }
+
+        header { padding: 30px 20px 10px; text-align: center; border-bottom: 1px solid #1a1a1a; }
+        .m-logo { width: 45px; filter: drop-shadow(0 0 10px var(--amber)); }
+
+        /* SØGEFELT - ALTID SYNLIGT */
+        .search-area { position: sticky; top: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); padding: 15px; z-index: 100; border-bottom: 1px solid #1a1a1a; }
+        .search-box { background: #1a1a1a; border-radius: 15px; border: 1px solid #333; padding: 12px; display: flex; align-items: center; }
+        #search { background: transparent; border: none; color: #fff; width: 100%; text-align: center; font-size: 16px; outline: none; font-weight: 700; }
+
+        /* QUICK-VIBE GENRE VÆLGER */
+        .genre-bar { display: flex; gap: 10px; overflow-x: auto; padding: 15px 20px; scrollbar-width: none; }
+        .genre-bar::-webkit-scrollbar { display: none; }
+        .vibe-btn { 
+            background: #111; border: 1px solid #333; color: #888; padding: 8px 18px; 
+            border-radius: 20px; font-size: 10px; font-weight: 800; white-space: nowrap; 
+            text-transform: uppercase; letter-spacing: 1px; transition: 0.2s;
         }
+        .vibe-btn.active { background: var(--amber); color: #000; border-color: var(--amber); }
 
-        body { 
-            font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; 
-            margin: 0; padding: 0; overflow-x: hidden;
+        /* RESULTAT LISTE */
+        #results { padding: 10px 15px 100px; }
+        .track-card { 
+            background: var(--card); padding: 18px; border-radius: 18px; margin-bottom: 10px; 
+            border: 1px solid #222; display: flex; flex-direction: column; transition: 0.1s;
         }
+        .track-card:active { transform: scale(0.98); background: #1a1a1a; border-color: var(--amber); }
+        .track-title { font-weight: 900; font-size: 14px; margin-bottom: 4px; color: var(--text); text-transform: uppercase; }
+        .track-path { font-size: 9px; color: #444; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* THE DANISH BRIEF - TICKER */
-        .news-ticker {
-            background: #0a0a0a;
-            border-bottom: 1px solid #1a1a1a;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            position: sticky;
-            top: 0;
-            z-index: 2000;
+        /* BUND MENU */
+        .bottom-nav { 
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); 
+            background: rgba(15,15,15,0.95); border-radius: 40px; border: 1px solid #333;
+            padding: 5px; display: flex; width: 280px; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
-
-        .ticker-label {
-            background: var(--dk-red);
-            color: white;
-            font-size: 8px;
-            font-weight: 900;
-            padding: 0 12px;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            z-index: 2001;
-            white-space: nowrap;
-        }
-
-        .ticker-content {
-            white-space: nowrap;
-            padding-left: 100%;
-            animation: scroll-news 40s linear infinite;
-            font-size: 12px;
-            color: #eee;
-            font-weight: 500;
-        }
-
-        @keyframes scroll-news {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-100%, 0); }
-        }
-
-        .app-content { padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .header { text-align: center; margin-bottom: 25px; margin-top: 10px; }
-        .m-logo { width: 55px; filter: drop-shadow(0 0 10px var(--amber)); opacity: 0.8; }
-
-        /* SANDBOX */
-        .sandbox-panel {
-            width: 100%; max-width: 480px; background: var(--card);
-            border-radius: 20px; border: 1px solid var(--gray);
-            padding: 15px; box-shadow: 0 15px 50px rgba(0,0,0,0.7);
-        }
-
-        .panel-label {
-            font-size: 9px; font-weight: 900; color: var(--amber); letter-spacing: 3px;
-            text-transform: uppercase; margin-bottom: 15px; text-align: center; opacity: 0.6;
-        }
-
-        .input-row { display: flex; gap: 10px; margin-bottom: 20px; }
-        #reqInput { flex: 1; background: #000; border: 1px solid #333; border-radius: 12px; padding: 14px; color: #fff; font-size: 16px; outline: none; }
-        .add-btn { background: var(--amber); border: none; border-radius: 12px; padding: 0 18px; font-weight: 900; color: #000; }
-
-        .list-container { display: flex; flex-direction: column; gap: 8px; }
-        .item { background: rgba(255,255,255,0.02); border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid transparent; }
-        .info { display: flex; align-items: center; gap: 12px; }
-        .dot { width: 8px; height: 8px; border-radius: 50%; }
-
-        /* DANISH BRIEF KNAP */
-        .dk-btn {
-            margin-top: 25px;
-            background: transparent;
-            border: 1px solid var(--dk-red);
-            color: var(--dk-red);
-            padding: 10px 22px;
-            border-radius: 30px;
-            font-size: 10px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            transition: 0.2s;
-        }
-        .dk-btn:active { background: var(--dk-red); color: #fff; }
+        .nav-btn { flex: 1; border: none; background: transparent; color: #555; padding: 12px; font-weight: 900; font-size: 10px; text-transform: uppercase; }
+        .nav-btn.active { color: var(--amber); }
     </style>
 </head>
 <body>
 
-    <div class="news-ticker" id="newsBar">
-        <div class="ticker-label">Danish Brief 🇩🇰</div>
-        <div class="ticker-content" id="newsContent">
-            +++ INDLÆSER SENESTE NYHEDER FRA DANMARK... +++ TRAFIK: KØ PÅ E45 VED VEJLE... +++ VEJR: SKYET MED MULIGHED FOR LOKALE BYGER... +++ BREAKING: NYT FRA CHRISTIANSBORG...
-        </div>
+<header><img src="m_logo.PNG" class="m-logo"></header>
+
+<div class="search-area">
+    <div class="search-box">
+        <input type="text" id="search" placeholder="SØG I ARKIVET..." onkeyup="filterTracks()" autocomplete="off">
     </div>
+</div>
 
-    <div class="app-content">
-        <div class="header">
-            <img src="m_logo.PNG" class="m-logo">
-        </div>
+<div class="genre-bar">
+    <div class="vibe-btn active" onclick="setVibe('', this)">ALLE</div>
+    <div class="vibe-btn" onclick="setVibe('dansk', this)">🇩🇰 DANSK</div>
+    <div class="vibe-btn" onclick="setVibe('house', this)">💃 HOUSE</div>
+    <div class="vibe-btn" onclick="setVibe('remix', this)">🔥 REMIX</div>
+    <div class="vibe-btn" onclick="setVibe('retro', this)">⏪ RETRO</div>
+</div>
 
-        <div class="sandbox-panel">
-            <div class="panel-label">Quick Validator</div>
-            
-            <div class="input-row">
-                <input type="text" id="reqInput" placeholder="Ønske..." onkeypress="if(event.key==='Enter')addReq()">
-                <button class="add-btn" onclick="addReq()">+</button>
-            </div>
+<div id="results"></div>
 
-            <div id="list" class="list-container"></div>
-        </div>
+<div class="bottom-nav">
+    <button class="nav-btn active">Search</button>
+    <button class="nav-btn" onclick="alert('Requests kommer snart')">Requests</button>
+    <button class="nav-btn" style="color:#ff3b3b" onclick="quickPanic()">SOS</button>
+</div>
 
-        <button class="dk-btn" onclick="updateDKBrief()">Opdatér Danish Brief</button>
-    </div>
+<script src="musik_data.js"></script>
+<script>
+    let currentVibe = '';
 
-    <script src="musik_data.js"></script>
-    <script>
-        let list = [];
-
-        // Simulerede danske overskrifter (Kan senere kobles til en nyheds-API)
-        function updateDKBrief() {
-            const dkNews = [
-                "BREAKING: Nyt politisk flertal om grøn trepart +++ ",
-                "TRAFIK: Storebæltsbroen åben efter kortvarig afspærring +++ ",
-                "VEJR: DMI varsler kraftig blæst over Kattegat i nat +++ ",
-                "KØBENHAVN: Ny metro-linje åbner officielt på søndag +++ ",
-                "SPORT: Landstræneren udtager truppen til næste kamp +++ ",
-                "POLITI: Ekstra kontrol i nattelivet denne weekend +++ "
-            ];
-            
-            // Mix nyhederne tilfældigt
-            const brief = dkNews.sort(() => 0.5 - Math.random()).join('');
-            document.getElementById('newsContent').innerText = brief;
-            
-            // Visuel bekræftelse
-            document.getElementById('newsBar').style.borderBottom = "1px solid var(--dk-red)";
-            setTimeout(() => { document.getElementById('newsBar').style.borderBottom = "1px solid #1a1a1a"; }, 1500);
-        }
-
-        function addReq() {
-            const input = document.getElementById('reqInput');
-            const val = input.value.trim();
-            if (!val) return;
-
-            const match = mineSange.some(s => s.navn.toLowerCase().includes(val.toLowerCase()));
-            list.unshift({ id: Date.now(), name: val, has: match });
-            input.value = '';
-            render();
-        }
-
-        function remove(id) {
-            list = list.filter(i => i.id !== id);
-            render();
-        }
-
-        function render() {
-            const container = document.getElementById('list');
-            container.innerHTML = list.map(i => `
-                <div class="item" style="border-left-color: ${i.has ? 'var(--green)' : 'var(--red)'}">
-                    <div class="info">
-                        <div class="dot" style="background: ${i.has ? 'var(--green)' : 'var(--red)'}"></div>
-                        <div class="name">${i.name}</div>
-                    </div>
-                    <div onclick="remove(${i.id})" style="color:#333; padding: 5px;">✕</div>
-                </div>
-            `).join('');
-        }
+    function setVibe(vibe, el) {
+        // Opdater knapper
+        document.querySelectorAll('.vibe-btn').forEach(btn => btn.classList.remove('active'));
+        el.classList.add('active');
         
-        // Kør første gang
-        updateDKBrief();
-        setInterval(updateDKBrief, 300000); // Tjekker for "nyt" hver 5. minut
-    </script>
+        currentVibe = vibe;
+        filterTracks();
+    }
+
+    function filterTracks() {
+        const query = document.getElementById('search').value.toLowerCase().trim();
+        const resultsDiv = document.getElementById('results');
+        
+        // Find matches baseret på både vibe og søgeord
+        const matches = mineSange.filter(s => {
+            const name = s.navn.toLowerCase();
+            const path = s.sti.toLowerCase();
+            const matchesQuery = name.includes(query) || path.includes(query);
+            const matchesVibe = currentVibe === '' || name.includes(currentVibe) || path.includes(currentVibe);
+            
+            return matchesQuery && matchesVibe;
+        });
+
+        // Vis kun hvis der er søgt eller valgt en genre
+        if (query.length < 2 && currentVibe === '') {
+            resultsDiv.innerHTML = '<div style="text-align:center; color:#333; font-size:12px; padding-top:50px;">Skriv noget eller vælg en kategori</div>';
+            return;
+        }
+
+        resultsDiv.innerHTML = matches.slice(0, 30).map(s => `
+            <div class="track-card" onclick="copyPath('${s.sti.replace(/'/g, "\\'")}')">
+                <div class="track-title">${s.navn}</div>
+                <div class="track-path">${s.sti}</div>
+            </div>
+        `).join('');
+    }
+
+    function copyPath(path) {
+        navigator.clipboard.writeText(path);
+        // Lille visuel feedback
+        const searchInput = document.getElementById('search');
+        const oldPlaceholder = searchInput.placeholder;
+        searchInput.placeholder = "KOPIERET!";
+        setTimeout(() => { searchInput.placeholder = oldPlaceholder; }, 1000);
+    }
+
+    function quickPanic() {
+        document.getElementById('search').value = "Banger";
+        filterTracks();
+    }
+
+    // Start med tomt felt
+    filterTracks();
+</script>
+
 </body>
 </html>
