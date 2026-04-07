@@ -8,22 +8,23 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,900;1,400&family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
     
-    <title>MiksMusik Elite</title>
+    <title>MiksMusik M-ELITE</title>
     <style>
         :root {
-            --gold: #c5a059;       /* Champagne Guld */
-            --platinum: #e5e5e5;   /* Platin Hvid */
-            --bg: #050505;         /* Dyb Sort */
-            --glass: rgba(15, 15, 15, 0.9); /* Mørkt Liquid Glass */
+            --m-amber: #ff9d00;    /* Gløden fra dit M logo */
+            --platinum: #ffffff;   /* Ren hvid for max læsbarhed */
+            --bg: #000000;         
+            --glass: rgba(15, 15, 15, 0.92); /* Ultra mørkt glas */
+            --glass-border: rgba(255, 157, 0, 0.2);
             --header-height: 150px;
         }
 
         body { 
             font-family: 'Inter', sans-serif;
             background-color: var(--bg); 
-            /* Baggrund med dæmpet logo og platin-glød */
-            background-image: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 60%), 
-                              linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)), 
+            /* Baggrund med dæmpet logo og rav-glød */
+            background-image: radial-gradient(circle at 50% 0%, rgba(255, 157, 0, 0.15) 0%, transparent 60%), 
+                              linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.92)), 
                               url('m_logo.PNG');
             background-size: cover;
             background-position: center;
@@ -36,11 +37,10 @@
             overflow-x: hidden;
         }
 
-        /* TOP SPOTLIGHT */
         .spotlight {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 350px;
-            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
             pointer-events: none;
             z-index: 10;
         }
@@ -53,10 +53,10 @@
         }
 
         .header-logo {
-            width: 80px;
+            width: 85px;
             height: auto;
             margin-bottom: 15px;
-            filter: drop-shadow(0 0 20px rgba(197, 160, 89, 0.2));
+            filter: drop-shadow(0 0 25px rgba(255, 157, 0, 0.3));
         }
 
         .logo-text {
@@ -68,23 +68,22 @@
             justify-content: center;
             gap: 10px;
             margin: 0;
+            letter-spacing: -1px;
         }
 
         .logo-text .miks {
-            color: var(--platinum);
+            color: #ffffff;
             font-style: italic;
             font-weight: 400;
         }
 
         .logo-text .musik {
-            color: var(--gold);
-            background: linear-gradient(to bottom, #f1d39b, #96702d);
+            color: var(--m-amber);
+            background: linear-gradient(to bottom, #ffc04d, #ff9d00);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.3));
         }
 
-        /* RESULTATER */
         #results { 
             display: flex; 
             flex-direction: column; 
@@ -97,48 +96,47 @@
             background: var(--glass); 
             padding: 20px; 
             border-radius: 28px; 
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             display: flex; 
             align-items: center; 
             gap: 15px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.8);
         }
 
         .cover-art {
             width: 60px; height: 60px; border-radius: 12px;
             object-fit: cover; background: #000;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 157, 0, 0.2);
             flex-shrink: 0;
         }
 
         .song-info { flex: 1; min-width: 0; }
         .title { 
-            font-weight: 800; font-size: 17px; color: var(--platinum); 
-            margin-bottom: 5px; text-shadow: 0 1px 3px rgba(0,0,0,1); 
+            font-weight: 800; font-size: 17px; color: var(--m-amber); 
+            margin-bottom: 5px; text-shadow: 0 1px 4px rgba(0,0,0,1); 
         }
         .path { 
-            font-size: 11px; color: rgba(255,255,255,0.3); 
+            font-size: 11px; color: rgba(255,255,255,0.4); 
             font-family: monospace; white-space: nowrap; 
             overflow: hidden; text-overflow: ellipsis; 
         }
 
         .btn-group { display: flex; gap: 10px; margin-top: 15px; }
         .btn {
-            background: rgba(255, 255, 255, 0.05); color: var(--gold); border: 1px solid rgba(197, 160, 89, 0.3);
+            background: rgba(255, 157, 0, 0.1); color: var(--m-amber); border: 1px solid var(--glass-border);
             padding: 14px; border-radius: 14px; font-size: 11px; font-weight: 900; 
             flex: 1; text-transform: uppercase; letter-spacing: 1px;
         }
-        .btn:active { background: var(--gold); color: #000; }
+        .btn:active { background: var(--m-amber); color: #000; }
 
-        /* FOOTER SØGEFELT */
         .footer {
             position: fixed; 
             bottom: 30px; 
             left: 20px; 
             right: 20px;
-            background: rgba(15, 15, 15, 0.95);
+            background: rgba(5, 5, 5, 0.98);
             padding: 20px; 
             border-radius: 40px;
             backdrop-filter: blur(50px);
@@ -158,10 +156,11 @@
             text-align: center; 
             outline: none;
             font-weight: 600;
+            text-transform: uppercase;
         }
 
         .stat-text { 
-            text-align: center; font-size: 10px; color: var(--gold); 
+            text-align: center; font-size: 10px; color: var(--m-amber); 
             margin-bottom: 10px; font-weight: 800; letter-spacing: 2px; 
         }
     </style>
@@ -180,8 +179,8 @@
     <div id="results"></div>
 
     <div class="footer">
-        <div class="stat-text" id="stat">ELITE SYSTEM READY</div>
-        <input type="text" id="search" placeholder="FIND DIT TRACK..." onkeyup="handleSearch()" autocomplete="off" spellcheck="false">
+        <div class="stat-text" id="stat">SYSTEM READY</div>
+        <input type="text" id="search" placeholder="SØG HER..." onkeyup="handleSearch()" autocomplete="off" spellcheck="false">
     </div>
 
     <script src="musik_data.js"></script>
@@ -242,9 +241,9 @@
 
         function copyText(text) {
             navigator.clipboard.writeText(text);
-            document.getElementById('stat').innerText = "TRACK KOPIERET!";
+            document.getElementById('stat').innerText = "TRACK KLAR!";
             setTimeout(() => {
-                document.getElementById('stat').innerText = "ELITE SYSTEM READY";
+                document.getElementById('stat').innerText = "SYSTEM READY";
             }, 2000);
         }
     </script>
